@@ -69,11 +69,23 @@
 			border:none;
 			background-color: #262629;
 		}
+		#duration{
+			font-size: 13px;
+			float: right;
+			padding-right: 10px;
+			margin-top: 70px;
+		}
+		#current{
+			font-size: 13px;
+			float: left;
+			padding-left: 10px;
+			margin-top: 70px;
+		}
 	</style>
 </head>
 <body>
 	<audio id="audio">
-		<source src="" type="audio/mpeg">
+		<source src="Around The World.mp3" type="audio/mpeg">
 		No podemos reproducir música en tu navegador web.
 	</audio>
 	<div id="controls" class="row center-align">
@@ -84,6 +96,10 @@
 					<span>
 						<h5 id="track">Around The World</h5>
 						<h6>Por <a href="#" id="art">Daft Punk</a></h6>
+					</span>
+					<span>
+						<span id="duration">00:00</span>
+						<span id="current">00:00</span>
 					</span>
 				</div>	
 			</div>		
@@ -96,7 +112,7 @@
 	 	<div class="col s3"><i id="volume-control" onmousemove="showControlVolume()" title="Volumen" class="white-text mdi-av-volume-up"></i>
 	 		<div id="volume" onmouseout="hideControlVolume()">	 			
 				<p class="range-field">
-					<input type="range" min="0" max="100" value="50"/>
+					<input type="range" min="0" max="100" onchange="changeVolume(this.value);" value="100"/>
 				</p>
 	 		</div>
 	 	</div>
@@ -107,12 +123,15 @@
 
 
 	<script>
+		control = document.getElementById("audio");
 		function play () {
 			var button = document.getElementById("main_control");
 			if (button.className == "white-text mdi-av-pause") {
 				button.className = "white-text mdi-av-play-arrow";
+				control.pause();
 			}else{
-				button.className = "white-text mdi-av-pause";
+				button.className = "white-text mdi-av-pause";				
+				control.play();
 			}			
 		}
 		function showControlVolume () {
@@ -122,53 +141,28 @@
 		function hideControlVolume () {
 			var volume = document.getElementById("volume");
 			volume.style.display = "none";
+		}		
+		$(document).ready(function(){
+			document.getElementById("duration").innerHTML = timer(control.duration);
+			setInterval(function(){document.getElementById("current").innerHTML = timer(control.currentTime)}, 1000);
+		})
+		function timer (time) {
+			var minutes = Math.floor( time / 60 );
+			var seconds = time % 60;
+		 
+			//Anteponiendo un 0 a los minutos si son menos de 10 
+			minutes = minutes < 10 ? '0' + minutes : minutes;
+			 
+			//Anteponiendo un 0 a los segundos si son menos de 10 
+			seconds = seconds < 10 ? '0' + seconds : seconds;
+			 
+			var result = minutes + ":" + seconds;  // 161:30
+			return (result.substring(0, 5));
+		}
+		function changeVolume(value){
+			control.volume = value / 100;
 		}
 	</script>
 
 </body>
 </html>
-
-
-<!-- 
-
-control = document.getElementById("control")
-<audio id="control" controls="">
-control
-<audio id="control" controls="">
-control.play()
-undefined
-control.pause()
-undefined
-control.readyState
-4
-control.properties
-HTMLPropertiesCollection { names: DOMStringList[0], length: 0 }
-control.duration
-130.372384
-control.currentTime
-11.091746
-1.01666666667
-1.01666666667
-var num = 1.01666666667
-undefined
-num.toFixed(2)
-"1.02"
-num.toFixed(1)
-"1.0"
-num = 1.03333333333
-1.03333333333
-num.toFixed(1)
-"1.0"
-num.toFixed(2)
-"1.03"
-num = 2.17287306667
-2.17287306667
-num.toFixed(2)
-"2.17"
-num = 0.18486243333
-0.18486243333
-num.toFixed(2)
-"0.18"
-
-
- -->
