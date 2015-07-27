@@ -235,5 +235,16 @@ var service = {
 			result = data['topalbums']['album'];
 		})
 		return result;
+	},
+	getTopTag: this.getTopTag = function() {
+		var result=-1;
+		$.ajax({
+			async: false,
+			url: "http://ws.audioscrobbler.com/2.0/?method=tag.getTopTags&api_key=0fbca00bcc89957dd5075f8c9661fe71&format=json"
+		})
+		.done(function(data){
+			result = data['toptags']['tag'];
+		})
+		return result;
 	}
 }
