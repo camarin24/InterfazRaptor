@@ -7,6 +7,8 @@
 	padding-left: 20px;
 	padding-top: 10px;
 	border-right: 20px solid white;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 #panelSearch .title{
 	color: rgba(50,50,50,0.3);
@@ -16,8 +18,12 @@
 	display: block !important;
 }
 .result #title{
+	cursor:pointer;
 	width: 180px;
 	padding-left: 0px !important;
+}
+.result #title:hover{
+	text-decoration: underline;
 }
 #panelSearch .cont{
 	padding-top: 20px;
@@ -34,15 +40,19 @@
 }
 #panelSearch .result #contec{
 	display: inline-block;
-	position: fixed;
+	position: absolute;
 	padding-left: 10px;
 	padding-top: 10px;
 }
 #panelSearch .result div #art{
 	color: gray;
+	cursor: pointer;
 	font-style: italic;
 	font-size: 12px;
 	padding-top: 5px;
+}
+#panelSearch .result div #art:hover{
+	text-decoration: underline;
 }
 .backgroud-izq{
 	background-color: rgba(0,0,0,0.9);

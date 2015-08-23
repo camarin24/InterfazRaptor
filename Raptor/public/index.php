@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 /**
  * MINI - an extremely simple naked PHP application
  *

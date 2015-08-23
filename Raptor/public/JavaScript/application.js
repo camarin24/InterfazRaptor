@@ -17,11 +17,11 @@ function searchTrack() {
             var template = "";         
             for (var i = 0; i < 5; i++) {
                 if (data['results']['trackmatches']['track'][i]['mbid'] != "") {
-                    template += "<div class='result' onclick='play(this)'>\
+                    template += "<div class='result'>\
                                     <img id='cover' width='60' src='"+data['results']['trackmatches']['track'][i]['image'][1]['#text']+"' alt=''>\
                                     <div id='contec'>\
-                                        <div id='title' class='truncate'>"+data['results']['trackmatches']['track'][i]['name']+"</div>\
-                                        <span id='art'>de "+data['results']['trackmatches']['track'][i]['artist']+"</span>\
+                                        <div id='title' onclick='play(this)' datayoutube='"+data['results']['trackmatches']['track'][i]['name']+" - "+data['results']['trackmatches']['track'][i]['artist']+"' dataimg='"+data['results']['trackmatches']['track'][i]['image'][3]['#text']+"' class='truncate'>"+data['results']['trackmatches']['track'][i]['name']+"</div>\
+                                        <a href='#' id='art'>"+data['results']['trackmatches']['track'][i]['artist']+"</a>\
                                     </div>\
                                 </div>";
                 };
@@ -70,7 +70,11 @@ function searchArtist() {
         })
 }
 function play(obj){
-    console.log(obj[0]);
-    var link = service.getLinkToPlay(obj.getElementById('title').innerHTML + ' ' + obj.getElementById('art').innerHTML);
+    //console.log(obj.attributes.data.value);
+    var link = service.getLinkToPlay(obj.attributes.datayoutube.value);
     document.getElementById("reproductor").contentWindow.document.getElementById("audio").src = link;
+    document.getElementById("reproductor").contentWindow.document.getElementById("img_cover").src = obj.attributes.dataimg.value;
+    link = obj.attributes.datayoutube.value.split("-");
+    document.getElementById("reproductor").contentWindow.document.getElementById("track").innerHTML = link[0];
+    document.getElementById("reproductor").contentWindow.document.getElementById("art").innerHTML = link[1];
 }

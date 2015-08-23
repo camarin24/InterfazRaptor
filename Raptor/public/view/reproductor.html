@@ -92,7 +92,7 @@
 	<div id="controls" class="row center-align">
 		<div class="col s12">			
 			<div id="cover">
-				<img src="https://upload.wikimedia.org/wikipedia/en/9/9c/Daftpunk-homework.jpg" alt="Cover">
+				<img id="img_cover" src="https://upload.wikimedia.org/wikipedia/en/9/9c/Daftpunk-homework.jpg" alt="Cover">
 				<div id="splash">
 					<span>
 						<h5 id="track">Around The World</h5>
@@ -143,9 +143,8 @@
 			var volume = document.getElementById("volume");
 			volume.style.display = "none";
 		}		
-		$(document).ready(function(){
-			document.getElementById("duration").innerHTML = timer(control.duration);
-			setInterval(function(){document.getElementById("current").innerHTML = timer(control.currentTime)}, 1000);
+		$(document).ready(function(){			
+			setInterval(function(){document.getElementById("duration").innerHTML = timer(control.duration);document.getElementById("current").innerHTML = timer(control.currentTime)}, 1000);
 		})
 		function timer (time) {
 			var minutes = Math.floor( time / 60 );

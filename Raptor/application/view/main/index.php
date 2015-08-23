@@ -8,7 +8,7 @@
                 left:0px;
             }
         </style>
-        <div class="row" id="bar">
+        <div class="row container-width" id="bar">
 			<div class="col s2 backgroud-izq z-depth-2"> <!--Menu de la izquierda-->
 				<div class="">
 					<div class="center-align">
@@ -36,28 +36,29 @@
                         //include "view/reproductor.html";
                      ?>
                  </div> -->
-                <iframe id="reproductor" src="view/reproductor.html" frameborder="0" scrolling="no"></iframe>
+                <iframe id="reproductor" src="<?php echo URL ?>view/reproductor.html" frameborder="0" scrolling="no"></iframe>
 			</div>
-        <div id="panelSearch" class="z-depth-2">
-            <div id="cancion">
-                <span class="title">Canciones</span>
-                <div class="cont" id="cont_cancion">
-                    
+            
+            <div id="panelSearch" class="z-depth-2">
+                <div id="cancion">
+                    <span class="title">Canciones</span>
+                    <div class="cont" id="cont_cancion">
+                        
+                    </div>
+                </div>
+                <div id="album">
+                    <span class="title">Albumes</span>
+                    <div class="cont" id="cont_album">
+                        
+                    </div>
+                </div>
+                <div id="artista">
+                    <span class="title">Artistas</span>
+                    <div class="cont" id="cont_artista">
+                        
+                    </div>
                 </div>
             </div>
-            <div id="album">
-                <span class="title">Albumes</span>
-                <div class="cont" id="cont_album">
-                    
-                </div>
-            </div>
-            <div id="artista">
-                <span class="title">Artistas</span>
-                <div class="cont" id="cont_artista">
-                    
-                </div>
-            </div>
-        </div>
-       
+        
         </div>    
     </div>
