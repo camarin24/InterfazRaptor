@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="../JavaScript/jquery.jscrollpane.min.js"></script>
+    <link href="../css/jquery.jscrollpane.css" rel="stylesheet" />
+    <style>
+		#back div{
+			position: fixed;
+			background-color: rgba(0,0,0,0.7);
+			top: 0px;
+			left: 0px;
+			width: 100%;
+			height: 100%;
+			z-index: 2;
+		}
+		#back img{
+			position: fixed;
+			width: 110%;
+			top: -50%;
+			left: -20px;
+			z-index: 1;
+			filter: blur(7px);
+		}
+		#cover{
+			z-index: 3;
+			position: fixed;
+		}
+		#cover img{
+			margin-top: 35%;
+			margin-left: 30%;
+		}
+		.collection{
+			overflow: scroll;
+			overflow-x: hidden;
+			width: 500px;
+			height: 500px;
+			margin-left: 5%;
+			margin-top:15%;
+			border:none !important;
+		}
+		.collection a{
+			background-color: transparent !important;
+			color: white !important;
+			border:none !important;
+		}
+		.collection a:hover{
+			background-color: rgb(255, 255, 255) !important;
+			color: black !important;
+		}
+		.jspVerticalBar{
+			background-color: transparent !important;
+		}
+		.jspTrack{
+			background-color:transparent !important;
+		}
+		.jspDrag{
+			background-color:rgba(110,110,110,0.3) !important;
+			border-radius: 5px;
+			width: 10px !important;
+			cursor: default !important;
+		}
+		.jspDrag:hover{
+			background-color:rgba(110,110,110,0.5) !important;
+		}
+		#title{
+			color: white;
+			margin-left: 30%;
+			width: 300px;
+			font-style: italic;
+		}
+        #body
+        {
+            position: absolute;
+            left: 15%;
+            z-index: 1;
+        }
+	</style>
+</head>
+<body>
+	<div id="body">
+          <div id="back">
+		<img id="img_backcover" src="" alt=""/>
+		<div></div>
+	</div>
+	<div id="cover" class="row">
+	    <div class="col s6">
+	    	<img id="img_cover" src="" width="300"><br>
+	    	<div id="title" class="center-align">
+	    		<span id="album">Cargando.. </span>por <a href="#" id="art">Cargando..</a>
+	    	</div>	    	
+	    </div>
+        <div class="col s6" id="list">
+        	<div class="collection" id="collection">
+	      </div>
+        </div>
+	</div>
+    <script>
+        function timer(time) {
+            var minutes = Math.floor(time / 60);
+            var seconds = time % 60;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            var result = minutes + ":" + seconds;
+            return (result.substring(0, 5));
+        }
+        $(function () {
+            $('.collection').jScrollPane();
+        });
+
+        var code = document.location.toString();
+        code = code.split("/");
+        var album = getAlbumByMbid(code[5]);
+        document.getElementById('album').innerHTML = album["name"] + " ";
+        document.getElementById('art').innerHTML = " " + album["artist"];
+        document.getElementById('img_cover').src = album["image"][4]["#text"];
+        document.getElementById('img_backcover').src = album["image"][4]["#text"];
+        var lon = album["tracks"]["track"].length;
+        var template = "";
+        for (var i = 0; i < lon; i++) {
+            template += '<a href="#!" class="collection-item">' + album["tracks"]["track"][i]["name"] + '<span class="badge">' + timer(album["tracks"]["track"][i]["duration"]) + '</span></a>'
+        };
+        document.getElementById('collection').innerHTML = template;
+    </script>
+    </div>
+</body>
+</html>

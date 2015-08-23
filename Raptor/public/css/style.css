@@ -1,0 +1,65 @@
+.hide{
+  display: none;
+}
+.pointer{
+  cursor: pointer;
+}
+#alert_nolikes{
+  width: 35%;
+  /*float: right;*/
+} 
+.collection-item{
+  transition: all 0.1s;
+}
+.collection-item:hover{
+  background-color: #C8C8C8;
+}
+.card-title{
+  text-shadow: 0px 0px 2px #000;
+}
+#txtsear{
+  height: 5px;
+}
+.btn_like{
+  float: right;
+  cursor: pointer;
+  padding-right: 10px;
+  margin-top: -20px;
+}
+#nav{
+  position: fixed;
+  z-index: 5;
+}
+#paddig_box{
+  padding-top: 100px;
+  padding-left: 40%;
+}
+#dropdown_user{
+  width: 300px !important;
+}
+#dropdown_user #icon, #mobile-demo #icon{
+  display: inline-block;
+  padding-right: 10px;
+  vertical-align: middle;
+}
+#dropdown_user a, #mobile-demo a{
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+#mobile-demo{
+  z-index: 6;
+}
+#sidenav-overlay{
+  z-index: 4;
+}
+.no{
+  border-radius: 0px;
+}
+#reproductor{
+  bottom: 0;
+  position: fixed;
+  background-color: white;
+  width: 100%;
+  top: 85%;
+  left:0px;
+}

@@ -1,0 +1,58 @@
+.border{
+	border:1px solid black;
+}
+
+.backgroud-profile{
+	background-image: url(../img/album.jpg);
+	background-size: cover; 
+	background-position: center;
+    /*-webkit-filter: blur(5px);*/
+    display: block;
+    margin-bottom: 0px;
+}
+.margin-profile{
+	margin-top: 5%;
+	margin-bottom: 5%;
+}
+.container-width{
+	width: 100%;
+}
+.tabs-border{
+	border-bottom: 1px solid #bdbdbd ;
+}
+.profile{
+	background-color: #002A32;
+	border:1px solid black;
+}
+.container-profile{
+	margin-left: 30%;
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	border:solid 4px #403F4C;
+	background-image: url(../img/avatar.jpg);
+	background-position: center;
+	background-size: cover; 
+}
+.display-inline{
+	display: block;
+}
+.padding{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.display-inline2{
+display: inline-block;
+}
+.backgroud-izq{
+	background-color: #403F4C;
+}
+@font-face {
+    font-family: "Chi";
+    font-style: normal;
+    font-weight: normal;
+    src: local("?"),url("../font/Chi-TownNF.ttf") format("truetype");
+}
+.logo-font{
+	font-family: Chi;
+}
