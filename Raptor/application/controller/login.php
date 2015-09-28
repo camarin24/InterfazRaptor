@@ -28,5 +28,17 @@ class login extends Controller
             }
     	}
     }
+    public function authentication(){
+        if (isset($_POST['email']) && isset($_POST['password'])) {
+            $flag = $this->model->login($_POST["email"],$_POST["password"]);
+            if ($flag != false){                
+               echo json_encode(array( "id" =>  $flag['id'], "name" => $flag['name'], "email" => $flag['email'], "img" => $flag['img'])); 
+            }else{
+                 echo json_decode(array("type" => "error", "message" => "user no found"));
+            }
+        }else{
+            echo json_decode(array("type" => "error", "message" => "set all values"));
+        }
+    }
 }
  ?>
