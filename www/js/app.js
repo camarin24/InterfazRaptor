@@ -1,0 +1,197 @@
+var myApp = new Framework7();
+
+var $$ = Dom7;
+
+var mainView = myApp.addView('.view-main', {
+    dynamicNavbar: true
+});
+
+$$("#txt_busqueda").focus(function () {
+    app.home.up();
+    app.home.enable = false;
+});
+
+$$("#txt_busqueda").blur(function () {
+    app.home.down();
+});
+
+$$("#txt_busqueda").keyup(function () {
+    app.search(this.value);
+});
+
+$$("#btn_cancel").on("click", function () {
+    if ($$("#txt_busqueda").val().trim() === "") {
+        app.home.enable = true;
+        app.home.down();
+    } else {
+        $$("#txt_busqueda").val("")
+    }
+    
+});
+
+var app = {
+    load: function () {
+        $$(".background_img")[0].style.backgroundColor = app.paletteColor.getColor();
+
+        app.untils.toServer("POST", { id_user: app.untils.user_id }, "track/getSuggested", function (data) {
+            data = data.data.data;
+            var lon = data.length;
+            if (lon === 0) {
+                $$("#div_state").text("Descarga musica gratis");
+            }
+            var template = "";
+            for (var i = 0; i < lon; i++) {
+                template += app.result.getItem(data[i].id, data[i].title, data[i].artist.name, data[i].album.title, data[i].preview, data[i].album.cover);
+            }
+            $$("#objecto_resultado").html(template);
+            app.result.startContextMenu();
+        });
+    },
+    paletteColor: {
+        palette: ['C63D0F', '007AFF', '7D1935', 'DF3E82', '3B6378','000'],
+        getColor: function () {
+            return "#" + (app.paletteColor.palette[parseInt(Math.random() * (6 - 0) + 0)]).toString();
+        }
+    },
+    untils: {
+        user_id : "-1",
+        serviceURL: "https://raptor-speakerblack.c9users.io/server/post/",
+        toServer: function (method, data, url, fn) {
+            try {
+                app.loader.show()
+                $.ajax({
+                    url: app.untils.serviceURL + url,
+                    type: method,
+                    dataType: 'json',
+                    data: data,
+                }).done(function (datos) {
+                    fn(datos);
+                }).fail(function (wx, data, ww) {    
+                    myApp.alert('No es posible conectar con el servidor.', '<img src="img/ic_error_black_24px.svg">');
+                }).always(function () {
+                    app.loader.hide()
+                })
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    },
+    loader: {
+        selector: $("#lbl_titulo"),
+        hide: function () {
+            app.loader.selector.hide();
+        },
+        show: function () {
+            app.loader.selector.show();
+        }
+    },
+    home: {
+        isHomeUp: false,
+        enable:true,
+        up: function () {
+            if (app.home.enable) {
+                offset = ($$(".navbar")[0].clientHeight - $$("#objecto_buscar")[0].clientHeight).toString() + "px";
+                $$("#objecto_buscar")[0].style.marginTop = offset;
+                $$("#objecto_buscar")[0].style.marginBottom = "0%";
+                $$(".navbar")[0].style.backgroundColor = "black";
+                $$("#border_content").removeClass("border");
+                $$(".background_img")[0].style.backgroundColor = "#F8F8F9";
+                $$("#btn_cancel")[0].style.visibility = "visible";
+                app.home.isHomeUp = true;
+            }
+        },
+        down: function () {
+            if (app.home.enable) {
+                app.result.clearPanel();
+                $$("#btn_cancel")[0].style.visibility = "hidden";
+                $$("#objecto_buscar")[0].style.marginTop = "0px";
+                $$("#objecto_buscar")[0].style.marginBottom = "100%";
+                $$(".navbar")[0].style.backgroundColor = "rgba(0, 0, 0, 0.6)";
+                $$("#border_content").addClass("border");
+                $$(".background_img")[0].style.backgroundColor = app.paletteColor.getColor();
+                app.home.isHomeUp = false;
+            }
+        }
+    },
+    result: {
+        clearPanel: function () {
+            $$("#div_state").text("Escribe para iniciar una busqueda");
+            $$("#objecto_resultado").html("");
+        },
+        items: {},
+        itemSeleted: "",
+        clearItems: function () {
+            app.result.items = {};
+        },
+        getItem: function (id, titulo, artista, album, link_preview, img) {
+            app.result.items[id] = { titulo: titulo, artista: artista, album: album, link_preview: link_preview, img: img };
+            return '<div class="card_result">\
+                                <div class="row">\
+                                    <div class="col-20">\
+                                        <img class="cover lazy" src="' + img + '" onerror="app.result.imgLoadError(this);" alt=""/>\
+                                    </div>\
+                                    <div class="col-70">\
+                                        <span class="title">' + titulo.substring(0,27) + '</span>\
+                                        <br />\
+                                        <span class="artist">De ' + artista + '<span class="album">- ' + album.substring(0, 23) + '</span></span>\
+                                        \
+                                    </div>\
+                                    <div class="col-10">\
+                                        <span class="btn">\
+                                            <a href="#" class="color-black link icon-only open-menu" track="' + id + '">\
+                                                <img src="img/ic_more_vert_black_24px.svg" alt="Menu icon" />\
+                                            </a>\
+                                        </span>\
+                                    </div>\
+                                </div>\
+                            </div>';
+        },
+        startContextMenu: function () {
+            $$('.open-menu').on('click', function () {
+                var clickedLink = this;
+                app.result.itemSeleted = this.getAttribute("track");
+                myApp.popover('.popover-menu', clickedLink);
+                // myApp.closeModal(".popover-menu") // Para cerrar 
+            });
+        },
+        imgLoadError: function (obj) {
+            temp = obj.src;
+            obj.src = "";
+            obj.src = temp;
+        }
+    },
+    search: function (query) {
+        $$("#div_state").text("Resultados de '" + query + "'");
+        app.untils.toServer("POST", { query : query }, "track/search", function (data) {
+            data = data.data.data;
+            var lon = data.length;
+            if (lon === 0) {
+                $$("#div_state").text("No hay resultados para '" + query + "'");
+            }
+            var template = "";
+            for (var i = 0; i < lon; i++) {
+                template += app.result.getItem(data[i].id, data[i].title, data[i].artist.name, data[i].album.title, data[i].preview, data[i].album.cover);
+            }
+            $$("#objecto_resultado").html(template);
+            app.result.startContextMenu();
+        });
+    },
+    reproductor: {
+        selector: document.getElementsByTagName("audio")[0],
+        play: function (src) {
+            if (src === undefined) {
+                app.reproductor.selector.play();
+                return;
+            }
+            app.reproductor.selector.src = src;
+            app.reproductor.selector.play();
+        },
+        pausa: function () {
+            app.reproductor.selector.pausa()
+        },
+    }
+};
+$(document).ready(function () {
+    app.loader.hide()
+    app.load();
+})

@@ -1,0 +1,198 @@
+@font-face {
+    font-family: "_sans_";    
+    src: url(../font/open-sans-light.woff); 
+}
+
+body
+{
+    font-family:_sans_;
+}
+
+#img_logo
+{
+    width:80%;
+    margin-right: auto;
+    margin-left: auto;
+    display: table;
+    margin-bottom: -15%;
+}
+
+#txt_busqueda
+{
+    width:90%;
+}
+
+.background_img
+{
+    /*background-image: url(../img/background_alt.png);
+    background-size: cover;*/
+    background-color:#000;
+}
+
+#objecto_buscar
+{
+    margin-bottom: 100%;
+}
+
+#lbl_titulo img
+{
+    height: 30px;
+    padding-top: 15px;
+}
+
+.border
+{
+    border: 1px solid black;
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+}
+
+#btn_cancel
+{
+    float: right;
+    margin-top: -34px;
+    visibility: hidden;
+    cursor: pointer;
+}
+
+.tono_negro
+{
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.page *
+{
+    transition: 0.5s ease;
+}
+
+.menuItem a
+{
+    color: #fff !important;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.menuItem
+{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: -15px;
+    padding-left: 10px;
+}
+
+#img_logo_menu
+{
+    width: 170px;
+    margin-top: -25px;
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+    margin-bottom: 35px;
+}
+
+.panel-left
+{
+    background-image: url(../img/background_alt.png);
+    background-size: cover;
+    overflow: hidden;
+}
+
+#panel
+{
+    background-color: rgb(0, 0, 0);
+    margin-left: -15px;
+    margin-right: -20px;
+    padding-bottom: 127%;
+    padding-top: 20px;
+    border-top: solid 15px black;
+    margin-top: -20px;
+}
+
+.card_result
+{
+    transition: none;
+    padding-bottom: 8px;
+    padding-top: 5px;
+}
+
+.card_result:active
+{
+    background-color: rgba(176,196,216,0.5);
+}
+
+.card_result .cover
+{
+    width:50px;
+    border-radius:3px;
+    margin-top:2px;
+    margin-left:7px;
+    margin-right:0px;
+    background-image: url(../img/background_alt.png);
+    display: list-item;
+    height: 50px;
+}
+
+.card_result .title
+{
+    font-size: 20px;
+    max-width: 100%;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.card_result .artist
+{
+    font-size:13px;
+    font-style:italic;
+    color:#94949F;
+    max-width: 50%;
+    width:30%;
+    display: inline;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.card_result .album
+{
+    font-size:12px;
+    font-style:italic;
+    color:#C2C2CA;
+    width: 40%;
+    display: inline;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.card_result .btn img
+{
+    margin-top: 5px;
+    padding:10px;
+    float: right;
+}
+
+#div_state
+{
+    margin-top: -30px;
+    padding: 10px;
+    color: rgb(148, 148, 159);
+}
+
+.popover {
+    width: 200px;
+}
+
+.popover-angle
+{
+    left: 70% !important;
+    /*display:none;*/
+}
+
+.popover
+{
+    margin-top:30px !important;
+}
+  

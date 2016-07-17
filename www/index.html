@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>My App</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="css/framework7.ios.min.css">
+    <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Left panel with reveal effect-->
+    <div class="panel panel-left panel-reveal">
+        <div class="content-block">
+            <p>
+                <img src="img/raptor_alt.png" id="img_logo_menu" alt="Raptor_aly" />
+            </p>
+            <div id="panel">
+                <p class="menuItem"><a href="#" class="open-right-panel">Buscar</a></p>
+                <p class="menuItem"><a href="#" class="open-right-panel">Mis Descargas</a></p>
+                <p class="menuItem"><a href="#" class="open-right-panel">Enviar un comentario</a></p>
+            </div>
+        </div>
+    </div>
+    <!-- Views-->
+    <div class="views theme-white">
+        <!-- Your main view, should have "view-main" class-->
+        <div class="view view-main">
+            <!-- Top Navbar-->
+            <div class="navbar tono_negro">
+                <div class="navbar-inner">
+                    <!-- We have home navbar without left link-->
+                    <div class="center sliding">
+                        <span id="lbl_titulo">
+                            <img src="img/loaders/oval.svg" alt="" />
+                        </span>
+                    </div>
+                    <div class="right">
+                        <a href="#" class="link icon-only open-panel">
+                            <!-- <i class="icon icon-bars"></i> -->
+                            <img src="img/ic_menu_white_24px.svg" alt="Menu icon" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+            <div class="pages navbar-through toolbar-through">
+                <!-- Page, data-page contains page name-->
+                <div data-page="index" class="page">
+
+                    <div class="background_img page-content">
+
+                        <div id="objecto_buscar">
+                            <img src="img/raptor.png" alt="Raptor" id="img_logo" />
+
+                            <div class="list-block">
+                                <ul class="border" id="border_content">
+                                    <li>
+                                        <div class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-input">
+                                                    <input type="text" id="txt_busqueda" placeholder="Buscar">
+                                                    <a href="#" id="btn_cancel">
+                                                        <img src="img/ic_close_black_24px.svg" alt="Close Button" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                        <div id="div_state">
+                            <span>Recomendado hoy para ti</span>
+                        </div>
+
+                        <div id="objecto_resultado">
+                                                                                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Bottom Toolbar-->
+            <div class="toolbar tono_negro" style="display: none;">
+                <div class="toolbar-inner">
+                    <a href="#" class="color-black link" style="padding-left: 50px; padding-right: 50px;">Descarga toda tu musica gratis</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Popover's -->
+    <div class="popover popover-menu">
+        <div class="popover-angle"></div>
+        <div class="popover-inner">
+            <div class="list-block">
+                <ul>
+                    <li><a href="#" class="list-button item-link color-black" onclick="app.reproductor.play(app.result.items[app.result.itemSeleted].link_preview);">Vista previa</a></li>
+                    <li><a href="#" class="list-button item-link color-black">Descargar</a></li>
+                    <li><a href="#" class="list-button item-link color-black">Reportar</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="reproductor">
+        <audio controls="controls">
+            <source src="http://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3" />
+        </audio>
+    </div>
+
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="js/framework7.min.js"></script>
+    <!-- Path to your app js-->
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/cocomo.js"></script>
+</body>
+</html>
