@@ -51,10 +51,9 @@ var app = {
         });
     },
     paletteColor: {
-        // palette: ['C63D0F', '007AFF', '7D1935', 'DF3E82', '3B6378','000'],
-        palette: ['455A64', 'FFC300', 'FF5733', 'C70039', 'ECEFF1', 'DAF7A6'],
+        palette: ['C63D0F', '007AFF', '7D1935', 'DF3E82', '3B6378','000','DB4437','4285F4'],
         getColor: function () {
-            return "#" + (app.paletteColor.palette[parseInt(Math.random() * (6 - 0) + 0)]).toString();
+            return "#" + (app.paletteColor.palette[parseInt(Math.random() * (8 - 0) + 0)]).toString();
         }
     },
     untils: {
@@ -196,8 +195,15 @@ var app = {
         pausa: function () {
             app.reproductor.selector.pause();
         },
+        playSeleted : function () {
+        	app.reproductor.play(app.result.items[app.result.itemSeleted].link_preview);
+        },
         error : function () {
-        	alert("Error");
+        	src = app.reproductor.selector.src
+        	app.reproductor.selector.src = "";
+        	app.reproductor.selector.src = src;
+            app.reproductor.selector.load();
+            app.reproductor.selector.play();
         }
     },
     openModal: function(selector,elem){
@@ -218,7 +224,6 @@ $(document).ready(function () {
     app.loader.hide()
     app.load();
     $('audio')[0].addEventListener('error', function failed(e) {
-		console.log(e);
 		app.reproductor.error();
 	}, true);
 });
