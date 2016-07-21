@@ -28,6 +28,10 @@ $$("#btn_cancel").on("click", function () {
     }
 });
 
+$$(".modal-overlay").on("click",function(){
+    app.closeModal('.popover-menu');
+})
+
 var app = {
     load: function () {
         $$(".background_img")[0].style.backgroundColor = app.paletteColor.getColor();
@@ -194,9 +198,13 @@ var app = {
     },
     openModal: function(selector,elem){
         if($(selector).length === 0) return false;
-        // $(".modal-overlay").addClass("modal-overlay-visible");
+        $(".modal-overlay").addClass("modal-overlay-visible");
         $(selector).css({"top":$(elem).offset().top + "px"}).show()
         app.elem = $(elem).offset().top;
+    },
+    closeModal:function(selector){
+        $(".modal-overlay").removeClass("modal-overlay-visible")
+        $(selector).hide();
     }
 };
 $(document).ready(function () {
