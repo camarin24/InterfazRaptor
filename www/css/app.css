@@ -208,6 +208,13 @@ body
 .card-header{
     padding: 5px 5px !important;
 }
+.card_result{
+    width: 100%;
+    text-align: left;
+}
+.col-80{
+    padding-left: 22px;
+}
 /*.card-header{
     background-size: cover;
     background-repeat: no-repeat;
