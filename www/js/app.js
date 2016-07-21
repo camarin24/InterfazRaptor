@@ -24,9 +24,8 @@ $$("#btn_cancel").on("click", function () {
         app.home.enable = true;
         app.home.down();
     } else {
-        $$("#txt_busqueda").val("")
+        $$("#txt_busqueda").val("");
     }
-    
 });
 
 var app = {
@@ -48,13 +47,14 @@ var app = {
         });
     },
     paletteColor: {
-        palette: ['C63D0F', '007AFF', '7D1935', 'DF3E82', '3B6378','000'],
+        // palette: ['C63D0F', '007AFF', '7D1935', 'DF3E82', '3B6378','000'],
+        palette: ['455A64', 'FFC300', 'FF5733', 'C70039', 'ECEFF1', 'DAF7A6'],
         getColor: function () {
             return "#" + (app.paletteColor.palette[parseInt(Math.random() * (6 - 0) + 0)]).toString();
         }
     },
     untils: {
-        user_id : "-1",
+        user_id: "-1",
         serviceURL: "https://raptor-speakerblack.c9users.io/server/post/",
         toServer: function (method, data, url, fn) {
             try {
@@ -66,7 +66,7 @@ var app = {
                     data: data,
                 }).done(function (datos) {
                     fn(datos);
-                }).fail(function (wx, data, ww) {    
+                }).fail(function (wx, data, ww) {
                     myApp.alert('No es posible conectar con el servidor.', '<img src="img/ic_error_black_24px.svg">');
                 }).always(function () {
                     app.loader.hide()
@@ -87,12 +87,13 @@ var app = {
     },
     home: {
         isHomeUp: false,
-        enable:true,
+        enable: true,
         up: function () {
             if (app.home.enable) {
+                $("#contenido").show("slow");
                 offset = ($$(".navbar")[0].clientHeight - $$("#objecto_buscar")[0].clientHeight).toString() + "px";
                 $$("#objecto_buscar")[0].style.marginTop = offset;
-                $$("#objecto_buscar")[0].style.marginBottom = "0%";
+                // $$("#objecto_buscar")[0].style.marginBottom = "0%";
                 $$(".navbar")[0].style.backgroundColor = "black";
                 $$("#border_content").removeClass("border");
                 $$(".background_img")[0].style.backgroundColor = "#F8F8F9";
@@ -102,10 +103,11 @@ var app = {
         },
         down: function () {
             if (app.home.enable) {
+                $("#contenido").hide("slow");
                 app.result.clearPanel();
                 $$("#btn_cancel")[0].style.visibility = "hidden";
                 $$("#objecto_buscar")[0].style.marginTop = "0px";
-                $$("#objecto_buscar")[0].style.marginBottom = "100%";
+                // $$("#objecto_buscar")[0].style.marginBottom = "100%";
                 $$(".navbar")[0].style.backgroundColor = "rgba(0, 0, 0, 0.6)";
                 $$("#border_content").addClass("border");
                 $$(".background_img")[0].style.backgroundColor = app.paletteColor.getColor();
@@ -131,7 +133,7 @@ var app = {
                                         <img class="cover lazy" src="' + img + '" onerror="app.result.imgLoadError(this);" alt=""/>\
                                     </div>\
                                     <div class="col-70">\
-                                        <span class="title">' + titulo.substring(0,27) + '</span>\
+                                        <span class="title">' + titulo.substring(0, 27) + '</span>\
                                         <br />\
                                         <span class="artist">De ' + artista + '<span class="album">- ' + album.substring(0, 23) + '</span></span>\
                                         \
@@ -150,7 +152,7 @@ var app = {
             $$('.open-menu').on('click', function () {
                 var clickedLink = this;
                 app.result.itemSeleted = this.getAttribute("track");
-                myApp.popover('.popover-menu', clickedLink);
+                app.openModal('.popover-menu',this);
                 // myApp.closeModal(".popover-menu") // Para cerrar 
             });
         },
@@ -162,7 +164,7 @@ var app = {
     },
     search: function (query) {
         $$("#div_state").text("Resultados de '" + query + "'");
-        app.untils.toServer("POST", { query : query }, "track/search", function (data) {
+        app.untils.toServer("POST", { query: query }, "track/search", function (data) {
             data = data.data.data;
             var lon = data.length;
             if (lon === 0) {
@@ -189,6 +191,12 @@ var app = {
         pausa: function () {
             app.reproductor.selector.pausa()
         },
+    },
+    openModal: function(selector,elem){
+        if($(selector).length === 0) return false;
+        // $(".modal-overlay").addClass("modal-overlay-visible");
+        $(selector).css({"top":$(elem).offset().top + "px"}).show()
+        app.elem = $(elem).offset().top;
     }
 };
 $(document).ready(function () {
