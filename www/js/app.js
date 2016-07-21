@@ -190,11 +190,15 @@ var app = {
                 return;
             }
             app.reproductor.selector.src = src;
+            app.reproductor.selector.load();
             app.reproductor.selector.play();
         },
         pausa: function () {
-            app.reproductor.selector.pausa()
+            app.reproductor.selector.pause();
         },
+        error : function () {
+        	alert("Error");
+        }
     },
     openModal: function(selector,elem){
         if($(selector).length === 0) return false;
@@ -207,7 +211,14 @@ var app = {
         $(selector).hide();
     }
 };
+
+
+
 $(document).ready(function () {
     app.loader.hide()
     app.load();
-})
+    $('audio')[0].addEventListener('error', function failed(e) {
+		console.log(e);
+		app.reproductor.error();
+	}, true);
+});
