@@ -211,10 +211,10 @@ var app = {
         if($(selector).length === 0) return false;
         var $selector = $(selector);
         $(".modal-overlay").addClass("modal-overlay-visible");
-        $selector.find("img").attr("src",app.result.items[app.result.itemSeleted].img);
+        $selector.find(".card-header").css({"background-image":"url("+app.result.items[app.result.itemSeleted].img+")"});
         $selector.find(".titulo").text(app.result.items[app.result.itemSeleted].titulo);
         $selector.find(".artist").text(app.result.items[app.result.itemSeleted].artista);
-        $selector.find(".album").text("-"+app.result.items[app.result.itemSeleted].album);
+        $selector.find(".album").text(app.result.items[app.result.itemSeleted].album);
         $selector.css({"top":$(elem).offset().top + "px"}).show()
         app.elem = $(elem).offset().top;
     },
