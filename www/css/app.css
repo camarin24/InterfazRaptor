@@ -57,7 +57,7 @@ body
 
 .tono_negro
 {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgb(33, 33, 33);
     /*Color negro recomendado #212121*/
 }
 
@@ -232,6 +232,7 @@ body
   .header{
     text-align: left;
     display: block;
+    z-index: 1;
 }
 .header .title
 {
@@ -264,4 +265,13 @@ body
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+}
+.card-hoverlay{
+    height: 40vw;
+    width: 270px;
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    background: #000;
+    opacity: 0.5;
 }
