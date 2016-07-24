@@ -29,7 +29,7 @@ $$("#btn_cancel").on("click", function () {
 });
 
 $$(".modal-overlay").on("click",function(){
-    app.closeModal('.popover-menu');
+    app.modal.closeModal('.popover-menu');
 })
 
 var app = {
@@ -44,7 +44,7 @@ var app = {
             }
             var template = "";
             for (var i = 0; i < lon; i++) {
-                template += app.result.getItem(data[i].id, data[i].title, data[i].artist.name, data[i].album.title, data[i].preview, data[i].album.cover);
+                template += app.result.getItem(data[i].id, data[i].title, data[i].artist.name, data[i].album.title, data[i].preview, data[i].album.cover, data[i].album.cover_big);
             }
             $$("#objecto_resultado").html(template);
             app.result.startContextMenu();
@@ -128,8 +128,8 @@ var app = {
         clearItems: function () {
             app.result.items = {};
         },
-        getItem: function (id, titulo, artista, album, link_preview, img) {
-            app.result.items[id] = { titulo: titulo, artista: artista, album: album, link_preview: link_preview, img: img };
+        getItem: function (id, titulo, artista, album, link_preview, img, img_alt) {
+            app.result.items[id] = { titulo: titulo, artista: artista, album: album, link_preview: link_preview, img: img, img_alt: img_alt };
             return '<div class="card_result">\
                                 <div class="row">\
                                     <div class="col-20">\
@@ -156,7 +156,7 @@ var app = {
             $$('.open-menu').on('click', function () {
                 var clickedLink = this;
                 app.result.itemSeleted = this.getAttribute("track");
-                app.openModal('.popover-menu',this);
+                app.modal.openModal('.popover-menu',this);
                 // myApp.closeModal(".popover-menu") // Para cerrar 
             });
         },
@@ -176,7 +176,7 @@ var app = {
             }
             var template = "";
             for (var i = 0; i < lon; i++) {
-                template += app.result.getItem(data[i].id, data[i].title, data[i].artist.name, data[i].album.title, data[i].preview, data[i].album.cover);
+                template += app.result.getItem(data[i].id, data[i].title, data[i].artist.name, data[i].album.title, data[i].preview, data[i].album.cover, data[i].album.cover_big);
             }
             $$("#objecto_resultado").html(template);
             app.result.startContextMenu();
@@ -207,20 +207,22 @@ var app = {
             app.reproductor.selector.play();
         }
     },
-    openModal: function(selector,elem){
-        if($(selector).length === 0) return false;
-        var $selector = $(selector);
-        $(".modal-overlay").addClass("modal-overlay-visible");
-        $selector.find(".card-header").css({"background-image":"url("+app.result.items[app.result.itemSeleted].img+")"});
-        $selector.find(".titulo").text(app.result.items[app.result.itemSeleted].titulo);
-        $selector.find(".artist").text(app.result.items[app.result.itemSeleted].artista);
-        $selector.find(".album").text(app.result.items[app.result.itemSeleted].album);
-        $selector.css({"top":$(elem).offset().top + "px"}).show()
-        app.elem = $(elem).offset().top;
-    },
-    closeModal:function(selector){
-        $(".modal-overlay").removeClass("modal-overlay-visible")
-        $(selector).hide();
+    modal: {
+    	openModal: function(selector,elem){
+	        if($(selector).length === 0) return false;
+	        var $selector = $(selector);
+	        $(".modal-overlay").addClass("modal-overlay-visible");
+	        $selector.find(".card-header").css({"background-image":"url("+app.result.items[app.result.itemSeleted].img_alt+")"});
+	        $selector.find(".titulo").text(app.result.items[app.result.itemSeleted].titulo);
+	        $selector.find(".artist").text(app.result.items[app.result.itemSeleted].artista);
+	        $selector.find(".album").text(app.result.items[app.result.itemSeleted].album);
+	        $selector.css({"top":$(elem).offset().top + "px"}).show()
+	        app.elem = $(elem).offset().top;
+	    },
+	    closeModal:function(selector){
+	        $(".modal-overlay").removeClass("modal-overlay-visible")
+	        $(selector).hide();
+	    }
     }
 };
 
