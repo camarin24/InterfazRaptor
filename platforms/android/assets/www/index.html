@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
     <!-- Path to your custom app styles-->
     <link rel="stylesheet" href="css/app.css">
+    <script type="text/javascript" src="cordova.js"></script>
 </head>
 
 <body>
@@ -117,27 +118,45 @@
     </div>-->
     <div class="modal popover-menu modal-in">
         <div class="modal-inner">
-            <div class="card-header">
+            <!--<div class="card-header">
                 <div class="card_result">
                     <div class="row">
                         <div class="col-20">
                             <img class="cover lazy" src="http://api.deezer.com/album/10263306/image" onerror="app.result.imgLoadError(this);" alt="">
                         </div>
                         <div class="col-80">
-                            <span class="">E g o</span>
+                            <span class="titulo">Nevermind</span>
                             <br>
-                            <span class="artist" style="margin-left:22px;">De J.A.C.K<span class="album">- F r a g m e n t s</span></span>
+                            <span class="artist" style="white-space: nowrap;">De J.A.C.K</span>
+                            <span class="album" style="white-space: nowrap;">- Classics</span>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card-content">
-                <div class="card-content-inner"></div>
             </div>
             <div class="card-footer">
                 <a href="#" class="" onclick="app.reproductor.playSeleted();">Vista previa</a>
                 <a href="#" class="">Descargar</a>
                 <a href="#" class="">Reportar</a>
+            </div>-->
+            <div class="card demo-card-header-pic">
+                <div style="background-image:url(http://api.deezer.com/album/12050322/image)" valign="bottom" class="card-header color-white no-border">
+                    <div class="card-hoverlay"></div>
+                    <div class="header">
+                        <span class="titulo title">Nevermind</span>
+                        <span class="artist" style="white-space: nowrap;">De J.A.C.K</span>
+                        <span class="album" style="white-space: nowrap;">- Classics</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-content-inner">
+                        Explicto
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="" onclick="app.reproductor.playSeleted();">Vista previa</a>
+                    <a href="#" class="">Descargar</a>
+                    <a href="#" class="">Reportar</a>
+                </div>
             </div>
         </div>
     </div>
@@ -154,6 +173,7 @@
     <!-- Path to your app js-->
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/cocomo.js"></script>
+    <script type="text/javascript" src="js/admob_simple.js"></script>
 </body>
 
 </html>

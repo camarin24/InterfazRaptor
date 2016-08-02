@@ -216,7 +216,6 @@ var app = {
 	        $selector.find(".titulo").text(app.result.items[app.result.itemSeleted].titulo);
 	        $selector.find(".artist").text(app.result.items[app.result.itemSeleted].artista);
 	        $selector.find(".album").text(app.result.items[app.result.itemSeleted].album);
-            debugger;
 
             if(($(elem).offset().top + $(selector).height()) > $('body').height()){
                 var top = parseFloat($(elem).offset().top) - parseFloat($(selector).height());

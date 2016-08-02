@@ -57,7 +57,7 @@ body
 
 .tono_negro
 {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgb(33, 33, 33);
     /*Color negro recomendado #212121*/
 }
 
@@ -208,8 +208,70 @@ body
 .card-header{
     padding: 5px 5px !important;
 }
+.card_result{
+    width: 100%;
+    text-align: left;
+}
+.col-80{
+    padding-left: 22px;
+}
 /*.card-header{
     background-size: cover;
     background-repeat: no-repeat;
     height: 150px;
 }*/
+.card{
+    margin: 0px !important;
+}
+ .demo-card-header-pic .card-header {
+    height: 40vw;
+    background-size: cover;
+    background-position: center;
+    padding: 10px 15px !important;
+  }
+  .header{
+    text-align: left;
+    display: block;
+    z-index: 1;
+}
+.header .title
+{
+    font-size: 20px;
+    max-width: 240px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-bottom: -7px;
+}
+
+.header .artist
+{
+    font-size:13px;
+    /*color:#94949F;*/
+    max-width: 240px;
+    width:240px;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.header .album
+{
+    font-size:12px;
+    width:240px;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.card-hoverlay{
+    height: 40vw;
+    width: 270px;
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    background: #000;
+    opacity: 0.5;
+}
