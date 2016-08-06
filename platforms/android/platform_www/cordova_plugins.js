@@ -6,6 +6,13 @@ module.exports = [
         "clobbers": [
             "window.AdMob"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-device/www/device.js",
+        "id": "cordova-plugin-device.device",
+        "clobbers": [
+            "device"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -13,7 +20,8 @@ module.exports.metadata =
 {
     "cordova-plugin-whitelist": "1.2.2",
     "cordova-plugin-extension": "1.5.1",
-    "cordova-plugin-admobpro": "2.19.1"
+    "cordova-plugin-admobpro": "2.19.1",
+    "cordova-plugin-device": "1.1.2"
 };
 // BOTTOM OF METADATA
 });

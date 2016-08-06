@@ -82,13 +82,12 @@
                             </div>
 
                         </div>
-                        <div id="contenido" style="display:none;">
+                        <div id="contenido" style="display: none;">
                             <div id="div_state">
                                 <span>Recomendado hoy para ti</span>
                             </div>
 
                             <div id="objecto_resultado">
-
                             </div>
                         </div>
 
@@ -139,7 +138,7 @@
                 <a href="#" class="">Reportar</a>
             </div>-->
             <div class="card demo-card-header-pic">
-                <div style="background-image:url(http://api.deezer.com/album/12050322/image)" valign="bottom" class="card-header color-white no-border">
+                <div style="background-image: url(http://api.deezer.com/album/12050322/image)" valign="bottom" class="card-header color-white no-border">
                     <div class="card-hoverlay"></div>
                     <div class="header">
                         <span class="titulo title">Nevermind</span>
@@ -149,13 +148,14 @@
                 </div>
                 <div class="card-content">
                     <div class="card-content-inner">
-                        Explicto
+                        <div class="list-block">
+                            <ul>
+                                <li><a href="#" class="list-button item-link" onclick="app.reproductor.playSeleted();">Escuchar</a></li>
+                                <li><a href="#" class="list-button item-link">Descargar</a></li>
+                                <li><a href="#" class="list-button item-link">Reportar</a></li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="" onclick="app.reproductor.playSeleted();">Vista previa</a>
-                    <a href="#" class="">Descargar</a>
-                    <a href="#" class="">Reportar</a>
                 </div>
             </div>
         </div>
@@ -171,9 +171,9 @@
     <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
     <script type="text/javascript" src="js/framework7.js"></script>
     <!-- Path to your app js-->
+    <script type="text/javascript" src="js/admob_simple.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/cocomo.js"></script>
-    <script type="text/javascript" src="js/admob_simple.js"></script>
 </body>
 
 </html>

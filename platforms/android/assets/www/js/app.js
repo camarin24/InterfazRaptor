@@ -36,6 +36,10 @@ var app = {
     load: function () {
         $$(".background_img")[0].style.backgroundColor = app.paletteColor.getColor();
 
+        // app.untils.toServer("POST", { id : app.untils.user_id }, "user/insertUser", function (data) {
+        //     console.log(data);
+        // });
+
         app.untils.toServer("POST", { id_user: app.untils.user_id }, "track/getSuggested", function (data) {
             data = data.data.data;
             var lon = data.length;
@@ -57,8 +61,9 @@ var app = {
         }
     },
     untils: {
-        user_id: "-1",
-        serviceURL: "https://raptor-speakerblack.c9users.io/server/post/",
+        user_id: "n-1",
+        serviceURL: "http://192.168.1.10/raptor/post/",
+        host : "http://192.168.1.10/",
         toServer: function (method, data, url, fn) {
             try {
                 app.loader.show()
@@ -69,8 +74,8 @@ var app = {
                     data: data,
                 }).done(function (datos) {
                     fn(datos);
-                }).fail(function (wx, data, ww) {
-                    myApp.alert('No es posible conectar con el servidor.', '<img src="img/ic_error_black_24px.svg">');
+                }).fail(function (wx, data, ww) {                  
+                    //myApp.alert('No es posible conectar con el servidor.', '<img src="img/ic_error_black_24px.svg">');
                 }).always(function () {
                     app.loader.hide()
                 })
@@ -184,6 +189,18 @@ var app = {
     },
     reproductor: {
         selector: document.getElementsByTagName("audio")[0],
+        getTrack: function (id) {
+            app.untils.toServer("POST", { id : id , id_user : app.untils.user_id }, "track/download", function (data) {
+                if (typeof data.data.trackURL == "undefined")
+                {
+                    app.reproductor.getTrack(id);
+                }
+                else
+                {
+                    app.reproductor.play(app.untils.host + data.data.trackURL);
+                }                
+            });
+        },
         play: function (src) {
             if (src === undefined) {
                 app.reproductor.selector.play();
@@ -197,7 +214,8 @@ var app = {
             app.reproductor.selector.pause();
         },
         playSeleted : function () {
-        	app.reproductor.play(app.result.items[app.result.itemSeleted].link_preview);
+        	//app.reproductor.play(app.result.items[app.result.itemSeleted].link_preview);
+            app.reproductor.getTrack(app.result.itemSeleted);
         },
         error : function () {
         	src = app.reproductor.selector.src
@@ -229,15 +247,37 @@ var app = {
 	        $(".modal-overlay").removeClass("modal-overlay-visible")
 	        $(selector).hide();
 	    }
+    },
+    process : {
+        process : {},
+        start : function (data) {
+            var f = new Date();
+            //h = f.getDate().toString()+f.getDay().toString()+f.getFullYear().toString()+f.getHours().toString()+f.getMinutes().toString()+f.getSeconds().toString()+data.length.toString();
+            h = f.getTime();
+            app.process.process[h] = data;
+            return h
+        },
+        kill : function (h) {
+            delete app.process.process[h];
+        }
     }
 };
 
 
 
-$(document).ready(function () {
+$(document).ready(function () { // Init everywhere
     app.loader.hide()
     app.load();
-    // $('audio')[0].addEventListener('error', function failed(e) {
-	// 	app.reproductor.error();
-	// }, true);
+    // # $('audio')[0].addEventListener('error', function failed(e) {
+	// 	# app.reproductor.error();
+	// # }, true);
 });
+
+
+document.addEventListener("deviceready", onDeviceReady, false);// Init solo en el movil
+function onDeviceReady() {
+    app.untils.user_id = typeof (device) === "undefined" ? "-1" : device.uuid;
+    initAdmob();
+    app.loader.hide()
+    app.load();
+}
