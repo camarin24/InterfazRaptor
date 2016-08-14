@@ -266,12 +266,7 @@ var app = {
       $selector.find(".artist").text(app.result.items[app.result.itemSeleted].artista);
       $selector.find(".album").text(app.result.items[app.result.itemSeleted].album);
 
-      if(($(elem).offset().top + $(selector).height()) > $('body').height()){
-        var top = parseFloat($(elem).offset().top) - parseFloat($(selector).height());
-        $selector.css({"top": top + 30 + "px"}).show()
-      }else{
-        $selector.css({"top":$(elem).offset().top + "px"}).show()
-      }
+      $selector.css({"top":"18%"}).show()
       app.elem = $(elem).offset().top;
     },
     closeModal:function(selector){
