@@ -12,14 +12,22 @@
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
     </feature>
+    <feature name="MusicControls">
+        <param name="android-package" value="com.homerours.musiccontrols.MusicControls" />
+    </feature>
+    <feature name="StatusBar">
+        <param name="android-package" value="org.apache.cordova.statusbar.StatusBar" />
+        <param name="onload" value="true" />
+    </feature>
     <allow-intent href="market:*" />
-    <name>com.speakerblack.raptor</name>
+    <name>Raptor</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        Listen music for free.
     </description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+        Waiting
     </author>
+    <icon src="www/img/raptor_alt.png" />
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

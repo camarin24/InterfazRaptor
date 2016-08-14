@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>My App</title>
+    <title>Raptor</title>
     <!-- Path to Framework7 Library CSS-->
     <link rel="stylesheet" href="css/framework7.ios.min.css">
     <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
@@ -30,6 +30,8 @@
                 <p class="menuItem"><a href="#" class="open-right-panel">Buscar</a></p>
                 <p class="menuItem"><a href="#" class="open-right-panel">Mis Descargas</a></p>
                 <p class="menuItem"><a href="#" class="open-right-panel">Enviar un comentario</a></p>
+                <p class="menuItem"><a href="#" class="open-right-panel" id="lbl_id">noload</a></p>
+
             </div>
         </div>
     </div>
@@ -60,6 +62,34 @@
                 <div data-page="index" class="page">
 
                     <div class="background_img page-content">
+
+                        <div id="reproductor">
+                            <audio>
+                                <source src="file:///C:/Users/David/Downloads/Pomme.mp3" type="audio/mp3" />
+                            </audio>
+                            <div class="row">
+                                <div class="col-15"> 
+                                    <img id="cover_alt" onerror="app.result.imgLoadError(this);" height="40" src="www/img/raptor_alt.png" alt="" />
+                                </div>
+                                <div class="col-50">
+                                    <span id="title_alt">Around The World</span>
+                                    <br />
+                                    <span id="art_alt">Daft Punk</span>
+                                </div>
+                                <div class="col-10">
+                                    <img class="rpt_control" style="padding-top: 10px;" src="img/ic_skip_previous_white_24px.svg" height="30" alt="BACK" />
+                                </div>
+                                <div class="col-10">
+                                    <img class="rpt_control" id="btn_play_pause" src="img/ic_pause_white_24px.svg" height="35" alt="PLAY" />
+                                </div>
+                                 <div class="col-10">
+                                    <img class="rpt_control" style="padding-top: 10px;" src="img/ic_skip_next_white_24px.svg" height="30" alt="NEXT" />
+                                </div>
+                                <div class="col-5"> 
+                                    
+                                </div>
+                            </div>
+                        </div>
 
                         <div id="objecto_buscar">
                             <img src="img/raptor.png" alt="Raptor" id="img_logo" />
@@ -161,17 +191,14 @@
         </div>
     </div>
 
-    <div id="reproductor">
-        <audio controls="controls">
-            <source src="" type="audio/mp3" />
-        </audio>
-    </div>
+
     <div class="modal-overlay "></div>
     <!-- Path to Framework7 Library JS-->
     <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
     <script type="text/javascript" src="js/framework7.js"></script>
     <!-- Path to your app js-->
     <script type="text/javascript" src="js/admob_simple.js"></script>
+    <script type="text/javascript" src="js/remote_control.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/cocomo.js"></script>
 </body>

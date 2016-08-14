@@ -15,8 +15,17 @@ $$("#txt_busqueda").blur(function () {
     app.home.down();
 });
 
+
+var can_do_search = true;
+
 $$("#txt_busqueda").keyup(function () {
-    app.search(this.value);
+    if (can_do_search) {
+        app.search(this.value);
+        can_do_search = false;
+        setTimeout(function(){
+            can_do_search = true;
+        },500,"Time out from search function");
+    }
 });
 
 $$("#btn_cancel").on("click", function () {
@@ -36,9 +45,7 @@ var app = {
     load: function () {
         $$(".background_img")[0].style.backgroundColor = app.paletteColor.getColor();
 
-        // app.untils.toServer("POST", { id : app.untils.user_id }, "user/insertUser", function (data) {
-        //     console.log(data);
-        // });
+        app.untils.toServer("POST", { id : app.untils.user_id }, "user/insertUser", function (data) { });
 
         app.untils.toServer("POST", { id_user: app.untils.user_id }, "track/getSuggested", function (data) {
             data = data.data.data;
@@ -55,27 +62,29 @@ var app = {
         });
     },
     paletteColor: {
-        palette: ['C63D0F', '007AFF', '7D1935', 'DF3E82', '3B6378','000','DB4437','4285F4'],
+        palette: ['fff', 'fff', 'fff', 'fff', 'fff'],
         getColor: function () {
-            return "#" + (app.paletteColor.palette[parseInt(Math.random() * (8 - 0) + 0)]).toString();
+            return "#" + (app.paletteColor.palette[parseInt(Math.random() * (5 - 0) + 0)]).toString();
         }
     },
     untils: {
-        user_id: "n-1",
-        serviceURL: "http://192.168.1.10/raptor/post/",
-        host : "http://192.168.1.10/",
+        user_id: "fromweb",
+        serviceURL: "http://192.168.1.12/raptor/post/",
+        host : "http://192.168.1.12/",
         toServer: function (method, data, url, fn) {
             try {
                 app.loader.show()
+                var postdata = data;
                 $.ajax({
                     url: app.untils.serviceURL + url,
                     type: method,
                     dataType: 'json',
-                    data: data,
+                    data: postdata,
                 }).done(function (datos) {
                     fn(datos);
                 }).fail(function (wx, data, ww) {                  
                     //myApp.alert('No es posible conectar con el servidor.', '<img src="img/ic_error_black_24px.svg">');
+                    console.log({ url : app.untils.serviceURL + url , data : postdata });
                 }).always(function () {
                     app.loader.hide()
                 })
@@ -116,7 +125,7 @@ var app = {
                 $$("#btn_cancel")[0].style.visibility = "hidden";
                 $$("#objecto_buscar")[0].style.marginTop = "0px";
                 // $$("#objecto_buscar")[0].style.marginBottom = "100%";
-                $$(".navbar")[0].style.backgroundColor = "rgba(0, 0, 0, 0.6)";
+                $$(".navbar")[0].style.backgroundColor = "rgb(0, 0, 0)";
                 $$("#border_content").addClass("border");
                 $$(".background_img")[0].style.backgroundColor = app.paletteColor.getColor();
                 app.home.isHomeUp = false;
@@ -202,13 +211,35 @@ var app = {
             });
         },
         play: function (src) {
-            if (src === undefined) {
+            if (src === undefined) { //El usuario pauso la cancion y ahora retorna la reproducion
                 app.reproductor.selector.play();
                 return;
-            }
+            }//Se reproduce una nueva cancion
             app.reproductor.selector.src = src;
             app.reproductor.selector.load();
+
+            data_controls = {
+                track       : app.result.items[app.result.itemSeleted].titulo,
+                artist      : app.result.items[app.result.itemSeleted].artista,
+                cover       : app.result.items[app.result.itemSeleted].img,
+
+                isPlaying   : true,
+                dismissable : false,
+
+                hasPrev   : true, 
+                hasNext   : true, 
+                hasClose  : false, 
+
+                ticker    : 'Escuchando ' + app.result.items[app.result.itemSeleted].titulo
+            };
+
+            $("#cover_alt")[0].src = app.result.items[app.result.itemSeleted].img;
+            $("#title_alt").text(app.result.items[app.result.itemSeleted].titulo);
+            $("#art_alt").text(app.result.items[app.result.itemSeleted].artista);
+            $("#reproductor")[0].style.opacity = "1";
+
             app.reproductor.selector.play();
+            start_remote_controls(data_controls);
         },
         pausa: function () {
             app.reproductor.selector.pause();
@@ -247,19 +278,6 @@ var app = {
 	        $(".modal-overlay").removeClass("modal-overlay-visible")
 	        $(selector).hide();
 	    }
-    },
-    process : {
-        process : {},
-        start : function (data) {
-            var f = new Date();
-            //h = f.getDate().toString()+f.getDay().toString()+f.getFullYear().toString()+f.getHours().toString()+f.getMinutes().toString()+f.getSeconds().toString()+data.length.toString();
-            h = f.getTime();
-            app.process.process[h] = data;
-            return h
-        },
-        kill : function (h) {
-            delete app.process.process[h];
-        }
     }
 };
 
@@ -268,16 +286,15 @@ var app = {
 $(document).ready(function () { // Init everywhere
     app.loader.hide()
     app.load();
-    // # $('audio')[0].addEventListener('error', function failed(e) {
-	// 	# app.reproductor.error();
-	// # }, true);
 });
 
 
 document.addEventListener("deviceready", onDeviceReady, false);// Init solo en el movil
 function onDeviceReady() {
-    app.untils.user_id = typeof (device) === "undefined" ? "-1" : device.uuid;
+    app.untils.user_id = typeof (device) === "undefined" ? "undefined" : device.uuid;
+    $("#lbl_id").text("id:"+app.untils.user_id);
     initAdmob();
     app.loader.hide()
     app.load();
+    StatusBar.backgroundColorByHexString("#000");
 }
