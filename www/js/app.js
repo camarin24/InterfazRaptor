@@ -213,6 +213,8 @@ var app = {
     play: function (src) {
       if (src === undefined) { //El usuario pauso la cancion y ahora retorna la reproducion
         app.reproductor.selector.play();
+        $("#btn_play_pause").attr("src","img/ic_pause_white_24px.svg");
+        MusicControls.updateIsPlaying(true);
         return;
       }//Se reproduce una nueva cancion
       app.reproductor.selector.src = src;
@@ -238,15 +240,16 @@ var app = {
       $("#art_alt").text(app.result.items[app.result.itemSeleted].artista);
       $("#reproductor")[0].style.opacity = "1";
 
+      $("#btn_play_pause").attr("src","img/ic_pause_white_24px.svg");
       app.reproductor.selector.play();
       start_remote_controls(data_controls);
       MusicControls.updateIsPlaying(true);
-      $("#btn_play_pause").attr("src","img/ic_play_arrow_white_24px.svg");
+
     },
     pausa: function () {
       app.reproductor.selector.pause();
       MusicControls.UpdateIsPlaying(false);
-      $("#btn_play_pause").attr("src","img/ic_pause_white_24px.svg");
+      $("#btn_play_pause").attr("src","img/ic_play_arrow_white_24px.svg");
     },
     playSeleted : function () {
       //app.reproductor.play(app.result.items[app.result.itemSeleted].link_preview);
@@ -260,7 +263,8 @@ var app = {
       app.reproductor.selector.play();
     },
     playPause:function(){
-      if(!app.reproductor.selector.paused){
+      debugger;
+      if(app.reproductor.selector.paused){
         app.reproductor.play();
       }else{
         app.reproductor.pausa();
