@@ -260,7 +260,7 @@ var app = {
       app.reproductor.selector.play();
     },
     playPause:function(){
-      if(app.reproductor.selector.paused){
+      if(!app.reproductor.selector.paused){
         app.reproductor.play();
       }else{
         app.reproductor.pausa();
