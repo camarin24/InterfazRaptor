@@ -240,15 +240,12 @@ var app = {
       $("#art_alt").text(app.result.items[app.result.itemSeleted].artista);
       $("#reproductor")[0].style.opacity = "1";
 
-      $("#btn_play_pause").attr("src","img/ic_pause_white_24px.svg");
       app.reproductor.selector.play();
       start_remote_controls(data_controls);
-      MusicControls.updateIsPlaying(true);
-
     },
     pausa: function () {
-      MusicControls.UpdateIsPlaying(false);
       $("#btn_play_pause").attr("src","img/ic_play_arrow_white_24px.svg");
+      MusicControls.UpdateIsPlaying(false);
       app.reproductor.selector.pause();
     },
     playSeleted : function () {
