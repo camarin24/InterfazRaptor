@@ -246,7 +246,7 @@ var app = {
     },
     pausa: function () {
       $("#btn_play_pause").attr("src","img/ic_play_arrow_white_24px.svg");
-      MusicControls.UpdateIsPlaying(false);
+      MusicControls.UpdateIsPlaying(true);
       app.reproductor.selector.pause();
     },
     playSeleted : function () {
