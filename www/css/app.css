@@ -1,6 +1,6 @@
 @font-face {
-    font-family: "_sans_";    
-    src: url(../font/open-sans-light.woff); 
+    font-family: "_sans_";
+    src: url(../font/open-sans-light.woff);
 }
 
 body
@@ -29,10 +29,10 @@ body
     background-color:#000;
 }
 
-/*#objecto_buscar
+#objecto_buscar
 {
-    margin-bottom: 100%;
-}*/
+    opacity: 1;
+}
 
 #lbl_titulo img
 {
