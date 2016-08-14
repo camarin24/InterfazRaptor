@@ -240,11 +240,13 @@ var app = {
 
       app.reproductor.selector.play();
       start_remote_controls(data_controls);
-      MusicControls.UpdateIsPlaying(true);
+      MusicControls.updateIsPlaying(true);
+      $("#btn_play_pause").attr("src","img/ic_play_arrow_white_24px.svg");
     },
     pausa: function () {
       app.reproductor.selector.pause();
       MusicControls.UpdateIsPlaying(false);
+      $("#btn_play_pause").attr("src","img/ic_pause_white_24px.svg");
     },
     playSeleted : function () {
       //app.reproductor.play(app.result.items[app.result.itemSeleted].link_preview);
