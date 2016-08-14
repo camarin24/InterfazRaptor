@@ -240,9 +240,11 @@ var app = {
 
       app.reproductor.selector.play();
       start_remote_controls(data_controls);
+      MusicControls.UpdateIsPlaying(true);
     },
     pausa: function () {
       app.reproductor.selector.pause();
+      MusicControls.UpdateIsPlaying(false);
     },
     playSeleted : function () {
       //app.reproductor.play(app.result.items[app.result.itemSeleted].link_preview);
@@ -254,6 +256,13 @@ var app = {
       app.reproductor.selector.src = src;
       app.reproductor.selector.load();
       app.reproductor.selector.play();
+    },
+    playPause:function(){
+      if(app.reproductor.selector.paused){
+        app.reproductor.play();
+      }else{
+        app.reproductor.pausa();
+      }
     }
   },
   modal: {
@@ -294,16 +303,18 @@ function onDeviceReady() {
   StatusBar.backgroundColorByHexString("#000");
 }
 
-var obj = $(".page-content");          //objeto sobre el que quiero detectar scroll
-var obj_top = obj.scrollTop()   //scroll vertical inicial del objeto
+var obj = $(".page-content");
+var obj_top = obj.scrollTop()
 obj.scroll(function(){
-  var obj_act_top = $(this).scrollTop();  //obtener scroll top instantaneo
+  var obj_act_top = $(this).scrollTop();
   if(obj_act_top > obj_top){
+    $("#objecto_buscar").css({"position":"fixed"})
     if(obj_act_top >= 200)
-      $("#objecto_buscar").css({"opacity":"0"});
+    $("#objecto_buscar").css({"opacity":"0"});
   }else{
     $("#div_state").css({"margin-top":"49px"})
     $("#objecto_buscar").css({"opacity":"1","position":"fixed"});
   }
-  obj_top = obj_act_top;                  //almacenar scroll top anterior
+  obj_top = obj_act_top;
 });
+app.reproductor.selector.onended = app.reproductor.pausa();
