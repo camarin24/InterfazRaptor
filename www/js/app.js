@@ -212,9 +212,9 @@ var app = {
     },
     play: function (src) {
       if (src === undefined) { //El usuario pauso la cancion y ahora retorna la reproducion
-        app.reproductor.selector.play();
         $("#btn_play_pause").attr("src","img/ic_pause_white_24px.svg");
         MusicControls.updateIsPlaying(true);
+        app.reproductor.selector.play();
         return;
       }//Se reproduce una nueva cancion
       app.reproductor.selector.src = src;
@@ -247,9 +247,9 @@ var app = {
 
     },
     pausa: function () {
-      app.reproductor.selector.pause();
       MusicControls.UpdateIsPlaying(false);
       $("#btn_play_pause").attr("src","img/ic_play_arrow_white_24px.svg");
+      app.reproductor.selector.pause();
     },
     playSeleted : function () {
       //app.reproductor.play(app.result.items[app.result.itemSeleted].link_preview);
