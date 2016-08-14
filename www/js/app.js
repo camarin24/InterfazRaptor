@@ -240,6 +240,7 @@ var app = {
       $("#art_alt").text(app.result.items[app.result.itemSeleted].artista);
       $("#reproductor")[0].style.opacity = "1";
 
+      $("#btn_play_pause").attr("src","img/ic_pause_white_24px.svg");
       app.reproductor.selector.play();
       start_remote_controls(data_controls);
     },
