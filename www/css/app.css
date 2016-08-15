@@ -1,329 +1,389 @@
 @font-face {
-    font-family: "_sans_";
-    src: url(../font/open-sans-light.woff);
+  font-family: "_sans_";
+  src: url(../font/open-sans-light.woff);
 }
 
 body
 {
-    font-family:_sans_;
+  font-family:_sans_;
 }
 
 #img_logo
 {
-    width:80%;
-    margin-right: auto;
-    margin-left: auto;
-    display: table;
-    margin-bottom: -15%;
+  width:80%;
+  margin-right: auto;
+  margin-left: auto;
+  display: table;
+  margin-bottom: -15%;
 }
 
 #txt_busqueda
 {
-    width:90%;
+  width:90%;
 }
 
 .background_img
 {
-    /*background-image: url(../img/background_alt.png);
-    background-size: cover;*/
-    background-color:#000;
+  /*background-image: url(../img/background_alt.png);
+  background-size: cover;*/
+  background-color:#000;
 }
 
 #objecto_buscar
 {
-    opacity: 1;
+  opacity: 1;
 }
 
 #lbl_titulo img
 {
-    height: 30px;
-    padding-top: 15px;
+  height: 30px;
+  padding-top: 15px;
 }
 
 .border
 {
-    border: none !important;
-    margin-left: 20px !important;
-    margin-right: 20px !important;
+  border: none !important;
+  margin-left: 20px !important;
+  margin-right: 20px !important;
 }
 
 #btn_cancel
 {
-    float: right;
-    margin-top: -34px;
-    visibility: hidden;
-    cursor: pointer;
+  float: right;
+  margin-top: -34px;
+  visibility: hidden;
+  cursor: pointer;
 }
 
 .tono_negro
 {
-    background-color: rgb(0, 0, 0);
-    /*Color negro recomendado #212121*/
+  background-color: rgb(0, 0, 0);
+  /*Color negro recomendado #212121*/
 }
 
 .page *
 {
-    transition: 0.5s ease;
+  transition: 0.5s ease;
 }
 
 .menuItem a
 {
-    color: #fff !important;
-    font-weight: bold;
-    font-size: 18px;
+  color: #fff !important;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .menuItem
 {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-top: -15px;
-    padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: -15px;
+  padding-left: 10px;
 }
 
 #img_logo_menu
 {
-    width: 170px;
-    margin-top: -25px;
-    margin-left: auto;
-    margin-right: auto;
-    display: table;
-    margin-bottom: 35px;
+  width: 170px;
+  margin-top: -25px;
+  margin-left: auto;
+  margin-right: auto;
+  display: table;
+  margin-bottom: 35px;
 }
 
 .panel-left
 {
-    background-image: url(../img/background_alt.png);
-    background-size: cover;
-    overflow: hidden;
+  background-image: url(../img/background_alt.png);
+  background-size: cover;
+  overflow: hidden;
 }
 
 #panel
 {
-    background-color: rgb(0, 0, 0);
-    margin-left: -15px;
-    margin-right: -20px;
-    padding-bottom: 400%;
-    padding-top: 20px;
-    border-top: solid 15px black;
-    margin-top: -20px;
+  background-color: rgb(0, 0, 0);
+  margin-left: -15px;
+  margin-right: -20px;
+  padding-bottom: 400%;
+  padding-top: 20px;
+  border-top: solid 15px black;
+  margin-top: -20px;
 }
 
 .card_result
 {
-    transition: none;
-    padding-bottom: 8px;
-    padding-top: 5px;
+  transition: none;
+  padding-bottom: 8px;
+  padding-top: 5px;
 }
 
 .card_result:active
 {
-    background-color: rgba(176,196,216,0.5);
+  background-color: rgba(176,196,216,0.5);
 }
 
 .card_result .cover
 {
-    width:50px;
-    border-radius:3px;
-    margin-top:2px;
-    margin-left:7px;
-    margin-right:0px;
-    background-image: url(../img/nofound.png);
-    background-repeat: no-repeat;
-    background-position:center;
-    display: list-item;
-    height: 50px;
+  width:50px;
+  border-radius:3px;
+  margin-top:2px;
+  margin-left:7px;
+  margin-right:0px;
+  background-image: url(../img/nofound.png);
+  background-repeat: no-repeat;
+  background-position:center;
+  display: list-item;
+  height: 50px;
 }
 
 .card_result .title
 {
-    font-size: 20px;
-    max-width: 100%;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+  font-size: 20px;
+  max-width: 100%;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .card_result .artist
 {
-    font-size:13px;
-    color:#94949F;
-    max-width:50%;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+  font-size:13px;
+  color:#94949F;
+  max-width:50%;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .card_result .album
 {
-    font-size:12px;
-    color:#C2C2CA;
-    max-width: 60%;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+  font-size:12px;
+  color:#C2C2CA;
+  max-width: 60%;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .card_result .btn img
 {
-    margin-top: 5px;
-    padding:10px;
-    float: right;
+  margin-top: 5px;
+  padding:10px;
+  float: right;
 }
 
 #div_state
 {
-    margin-top: -30px;
-    padding: 10px;
-    color: rgb(148, 148, 159);
+  margin-top: -30px;
+  padding: 10px;
+  color: rgb(148, 148, 159);
 }
 
 .popover {
-    width: 200px;
+  width: 200px;
 }
 
 .popover-angle
 {
-    left: 70% !important;
-    /*display:none;*/
+  left: 70% !important;
+  /*display:none;*/
 }
 
 .popover
 {
-    margin-top:30px !important;
+  margin-top:30px !important;
 }
 /*Modificacion del estilo nativo del modal para adaptarlo al nuestro*/
 .modal{
-    border-radius:5px !important;
-    box-shadow: 0 1px 2px rgba(0,0,0,.3);
+  border-radius:5px !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,.3);
 }
 .modal-inner{
-    border-radius: unset !important;
-    padding: 0px !important;
+  border-radius: unset !important;
+  padding: 0px !important;
 }
 .card-header{
-    padding: 5px 5px !important;
+  padding: 5px 5px !important;
 }
 .card_result{
-    width: 100%;
-    text-align: left;
+  width: 100%;
+  text-align: left;
 }
 .col-80{
-    padding-left: 22px;
+  padding-left: 22px;
 }
 /*.card-header{
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 150px;
+background-size: cover;
+background-repeat: no-repeat;
+height: 150px;
 }*/
 .card{
-    margin: 0px !important;
+  margin: 0px !important;
 }
- .demo-card-header-pic .card-header {
-    height: 40vw;
-    background-size: cover;
-    background-position: center;
-    padding: 10px 15px !important;
-  }
-  .header{
-    text-align: left;
-    display: block;
-    z-index: 1;
+.demo-card-header-pic .card-header {
+  height: 40vw;
+  background-size: cover;
+  background-position: center;
+  padding: 10px 15px !important;
+}
+.header{
+  text-align: left;
+  display: block;
+  z-index: 1;
 }
 .header .title
 {
-    font-size: 20px;
-    max-width: 240px;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    margin-bottom: -7px;
+  font-size: 20px;
+  max-width: 240px;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-bottom: -7px;
 }
 
 .header .artist
 {
-    font-size:13px;
-    /*color:#94949F;*/
-    max-width: 240px;
-    width:240px;
-    display: block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+  font-size:13px;
+  /*color:#94949F;*/
+  max-width: 240px;
+  width:240px;
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .header .album
 {
-    font-size:12px;
-    width:240px;
-    display: block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+  font-size:12px;
+  width:240px;
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .card-hoverlay{
-    height: 40vw;
-    width: 270px;
-    left: 0px;
-    top: 0px;
-    position: absolute;
-    background: #000;
-    opacity: 0.5;
+  height: 40vw;
+  width: 270px;
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  background: #000;
+  opacity: 0.5;
 }
 
 #lbl_id{
-    font-size: 10px;
-    position: absolute;
-    top: 97%;
-    left: 25%;
+  font-size: 10px;
+  position: absolute;
+  top: 97%;
+  left: 25%;
 }
 
 #reproductor
 {
-    position:fixed !important;
-    width:100%;
-    top:95%;
-    margin-top: -30px;
-    background-color: #000;
-    opacity:0;
+  position:fixed !important;
+  width:100%;
+  top:95%;
+  margin-top: -30px;
+  background-color: #000;
+  opacity:0;
 }
 #reproductor audio
 {
-    width:100%;
+  width:100%;
 }
 
 #reproductor #cover_alt
 {
-    padding:5px;
+  padding:5px;
 }
 
 #reproductor .rpt_control
 {
-    padding-top:8px;
+  padding-top:8px;
 }
 
 #reproductor span
 {
-    color:#fff;
-    padding-top: 5px;
-    position: fixed;
-    max-width: 190px;
-    display: block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+  color:#fff;
+  padding-top: 5px;
+  position: fixed;
+  max-width: 190px;
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 #reproductor #title_alt
 {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 #reproductor #art_alt
 {
-    font-size: 12px;
+  font-size: 12px;
+}
+
+/*Detalle de la cancion*/
+.background-detail{
+  background-image: url(http://a3.mzstatic.com/us/r30/Music/v4/f9/ac/64/f9ac64d0-5509-381c-14d3-d6822af5ebeb/Cover.600x600-75.jpg);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-filter:blur(4px);
+  z-index: 1;
+  width: 100%;
+  height: 91%;
+  max-height: 91%;
+}
+.nav-detail{
+  max-height: 45px;
+}
+.align-center{
+  text-align: center;
+  color: #fefefe;
+}
+.align-center label{
+  font-size: 11px;
+}
+.progress-bar{
+  height: 2px;
+  width: 50%;
+  margin-top: -2px;
+  background-color: #fefefe;
+}
+.progress-bar-inverse{
+  height: 2px;
+  margin-top: 9px;
+  background-color: #2b2b2b;
+}
+.detail-player{
+  top:76% !important;
+}
+.album-image{
+  position: absolute;
+  top: 20%;
+  width: 94%;
+}
+.album-image img{
+  width: 200px;
+}
+.song-detail{
+  height: 49px;
+  background-color: #362d42;
+  opacity: .8;
+  padding: 10px;
+}
+.white{
+  color: #fefefe;
+}
+.song-tittle{
+  font-weight: bold;
+}
+.song-artist{
+  margin-top: 1px;
 }
