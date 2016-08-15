@@ -21,7 +21,10 @@ $$("#txt_busqueda").keyup(function () {
         app.search(this.value);
         can_do_search = false;
         setTimeout(function () {
-            can_do_search = true;
+            if ($("#txt_busqueda").val() != app.result.lastQuerySearch) {
+                app.search( $("#txt_busqueda").val() );
+            }
+            can_do_search = true;            
         }, 500, "Time out from search function");
     }
 });
@@ -173,14 +176,22 @@ var app = {
             });
         },
         imgLoadError: function (obj) {
-            temp = obj.src;
-            obj.src = "";
-            obj.src = temp;
-        }
+            setTimeout(function () {
+                temp = obj.src;
+                obj.src = "";
+                obj.src = temp;
+            }, 200, "Time out from imgLoadError")
+        },
+        lastQuerySearch : ""
     },
     search: function (query) {
         $$("#div_state").text("Resultados de '" + query + "'");
         app.untils.toServer("POST", { query: query }, "track/search", function (data) {
+            app.result.lastQuerySearch = query;
+            if (data === undefined) {
+                $$("#div_state").text("Cargando...");
+                return;
+            }
             data = data.data.data;
             var lon = data.length;
             if (lon === 0) {
