@@ -10,12 +10,10 @@ function start_remote_controls(data) {
                 alert("anterior");
                 break;
             case 'music-controls-pause':
-                MusicControls.updateIsPlaying(false);
-                app.reproductor.pausa();
+                app.reproductor.playPause();
                 break;
-            case 'music-controls-play':
-                MusicControls.updateIsPlaying(true);
-                app.reproductor.play();
+            case 'music-controls-play':                
+                app.reproductor.playPause();
                 break;
             case 'music-controls-destroy':
                 alert("fuera");
