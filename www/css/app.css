@@ -340,6 +340,8 @@ height: 150px;
   width: 100%;
   height: 91%;
   max-height: 91%;
+  filter: blur(10px);
+  z-index: 0;
 }
 .nav-detail{
   max-height: 45px;
@@ -371,6 +373,8 @@ height: 150px;
 }
 .album-image img{
   width: 200px;
+  border-radius: 3px;
+  box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
 }
 .song-detail{
   height: 49px;
