@@ -177,7 +177,7 @@
       </div>
       <div class="row album-image">
         <div class="col-100 align-center">
-          <img src="https://upload.wikimedia.org/wikipedia/en/2/29/Disclosure_-_Latch_(feat._Sam_Smith).png" alt="" class="" />
+          <img id="img-album" data-adaptive-background='1' src="https://upload.wikimedia.org/wikipedia/en/2/29/Disclosure_-_Latch_(feat._Sam_Smith).png" alt="" class="" />
         </div>
       </div>
 
@@ -194,7 +194,7 @@
             <label>1:50</label>
           </div>
           <div class="col-70">
-            <div class="progress-bar-inverse"></div>
+            <div class="progress-bar-inverse" onclick="app.reproductor.setSongPosition(event)"></div>
             <div class="progress-bar"></div>
           </div>
           <div class="col-15 align-center">
@@ -224,6 +224,7 @@
   <!-- Path to Framework7 Library JS-->
   <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
   <script type="text/javascript" src="js/framework7.js"></script>
+  <script type="text/javascript" src="js/jquery.adaptive-backgrounds.js"></script>
   <!-- Path to your app js-->
   <script type="text/javascript" src="js/admob_simple.js"></script>
   <script type="text/javascript" src="js/remote_control.js"></script>
