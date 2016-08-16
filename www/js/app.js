@@ -274,11 +274,10 @@ var app = {
       }
     },
     setSongPosition:function(event){
-      var x = event.clientX;
-      var mousePositions = document.querySelector('.progress-bar-inverse');
-      var por = ( 100 * x ) / mousePositions.clientWidth
-      // mousePositions.innerHTML = 'X: '+x+' de: '+mousePositions.clientWidth+', %: '+ por;
-      $(".progress-bar").css({"width":por+"%"});
+        var x = event.clientX - (document.querySelector(".dummy-space").clientWidth + 15);
+        var mousePositions = document.getElementById('song-progress');
+        var por = ( 100 * x ) / mousePositions.clientWidth
+        $(".progress-bar").css({"width":por+"%"});
     }
   },
   modal: {

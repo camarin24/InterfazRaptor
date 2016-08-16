@@ -190,12 +190,14 @@
       </div>
       <div class="" style="padding-top:10px;background-color:#362d42;">
         <div class="row">
-          <div class="col-15 align-center">
+          <div class="col-15 align-center dummy-space">
             <label>1:50</label>
           </div>
           <div class="col-70">
-            <div class="progress-bar-inverse" onclick="app.reproductor.setSongPosition(event)"></div>
-            <div class="progress-bar"></div>
+            <div class="progress-bar-inverse"></div>
+            <div style="width:100%" id="song-progress" onclick="app.reproductor.setSongPosition(event)">
+              <div class="progress-bar"></div>
+            </div>
           </div>
           <div class="col-15 align-center">
             <label>3:40</label>
