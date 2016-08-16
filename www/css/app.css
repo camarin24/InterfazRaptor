@@ -353,7 +353,6 @@ height: 150px;
 }
 .progress-bar{
   height: 2px;
-  width: 50%;
   margin-top: -2px;
   background-color: #fefefe;
 }

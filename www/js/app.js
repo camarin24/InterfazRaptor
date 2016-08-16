@@ -278,7 +278,28 @@ var app = {
         var mousePositions = document.getElementById('song-progress');
         var por = ( 100 * x ) / mousePositions.clientWidth
         $(".progress-bar").css({"width":por+"%"});
+    },
+    getSongDuration:function(){
+      var duration = app.reproductor.selector.duration;
+      var currentTime = app.reproductor.selector.currentTime;
+      $("#currentTime").text(app.reproductor.calculateTime(currentTime));
+      $("#totalTime").text(app.reproductor.calculateTime(duration));
+    },
+    calculateTime:function(time){
+      var minutes = Math.floor(time / 60);
+      var seconds = parseInt(time - minutes * 60);
+      return minutes+":"+seconds;
+    },
+    currentTimeToProgressBar:function(){
+      var currentTime = app.reproductor.selector.currentTime;
+      var duration = app.reproductor.selector.duration;
+      var width = document.getElementById('song-progress').clientWidth;
+      var por = ( 100 * currentTime ) / duration;
+      $(".progress-bar").css({"width":por+"%"});
+      app.reproductor.getSongDuration();
     }
+
+
   },
   modal: {
     openModal: function (selector, elem) {
