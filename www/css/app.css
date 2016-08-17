@@ -292,6 +292,15 @@ height: 150px;
   background-color: #000;
   opacity:0;
 }
+#_reproductor
+{
+  position:fixed !important;
+  width:100%;
+  top:95%;
+  margin-top: -30px;
+  background-color: #000;
+  opacity:0;
+}
 #reproductor audio
 {
   width:100%;
@@ -331,7 +340,7 @@ height: 150px;
 
 /*Detalle de la cancion*/
 .background-detail{
-  background-image: url(http://a3.mzstatic.com/us/r30/Music/v4/f9/ac/64/f9ac64d0-5509-381c-14d3-d6822af5ebeb/Cover.600x600-75.jpg);
+  background-image: url(https://i1.sndcdn.com/artworks-000119176498-r2emud-t500x500.jpg);
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: cover;
