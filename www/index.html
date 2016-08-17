@@ -28,7 +28,8 @@
       </p>
       <div id="panel">
         <p class="menuItem"><a href="#" class="open-right-panel">Buscar</a></p>
-        <p class="menuItem"><a href="#" class="open-right-panel">Mis Descargas</a></p>
+        <p class="menuItem"><a href="#" class="open-right-panel">Playlists</a></p>
+        <p class="menuItem"><a href="#" class="open-right-panel">Descargado</a></p>
         <p class="menuItem"><a href="#" class="open-right-panel">Enviar un comentario</a></p>
         <p class="menuItem"><a href="#" class="open-right-panel" id="lbl_id">noload</a></p>
 
@@ -161,7 +162,7 @@
 
   <!--Detalle de las canciones-->
   <div class="popup popup-detail">
-    <div class="background-detail">
+    <div class="background-detail" style="background-image: url(none)">
     </div>
     <div class="navbar-inner nav-detail">
       <!-- We have home navbar without left link-->
@@ -172,9 +173,6 @@
       </div>
     </div>
     <div class="content-block">
-      <div class="background-detail" id="background-detail">
-
-      </div>
       <div class="row album-image">
         <div class="col-100 align-center">
           <img id="img_cover_detail" src="https://i1.sndcdn.com/artworks-000119176498-r2emud-t500x500.jpg" alt="" class="" />
@@ -185,13 +183,13 @@
 
     <div id="_reproductor" style="opacity:1;background-color:transparent;" class="detail-player">
       <div class="song-detail white">
-        <span class="song-tittle">You and Me</span> <br>
-        <span class="song-artist">Flume</span>
+        <span class="song-tittle" id="lbl_title_alt">You and Me</span> <br>
+        <span class="song-artist" id="lbl_artist_alt">Flume</span>
       </div>
       <div id="_reproductor_" style="padding-top:10px;background-color:#362d42;">
         <div class="row">
           <div class="col-15 align-center dummy-space">
-            <label id="currentTime">1:50</label>
+            <label id="currentTime">00:00</label>
           </div>
           <div class="col-70">
             <div class="progress-bar-inverse"></div>
@@ -200,7 +198,7 @@
             </div>
           </div>
           <div class="col-15 align-center">
-            <label id="totalTime">3:40</label>
+            <label id="totalTime">00:00</label>
           </div>
         </div>
         <div class="row" style="padding:10px 0px;">
