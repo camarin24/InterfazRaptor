@@ -27,7 +27,7 @@
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Waiting
     </author>
-    <icon src="www/img/raptor_alt.png" />
+    <icon src="www/img/raptor_icon.png" />
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
