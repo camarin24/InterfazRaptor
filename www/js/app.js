@@ -55,7 +55,7 @@ $$(".modal-overlay").on("click", function () {
 var app = {
   load: function () {
     $$(".background_img")[0].style.backgroundColor = app.paletteColor.getColor();
-
+    app.reproductor.isPlaying = !app.reproductor.selector.paused;
     app.untils.toServer("POST", { id: app.untils.user_id }, "user/insertUser", function (data) { });
 
     app.untils.toServer("POST", { id_user: app.untils.user_id }, "track/getSuggested", function (data) {
@@ -315,14 +315,16 @@ var app = {
     getColorPalette:function(){
       var img = document.getElementById('img_cover_detail');
       RGBaster.colors(img, {
-        exclude: [ 'rgb(255,255,255)','rgb(0,0,0)' ],
+        exclude: [ 'rgb(255,255,255)','rgb(0,0,0)','rgb(233, 233, 233)',
+                    "rgb(234,234,234)","rgb(235,235,235)","rgb(232,232,232)",
+                    "rgb(236,236,236)","rgb(237,237,237)","rgb(228,228,228)",
+                    "rgb(230,230,230)","rgb(229,229,229)","rgb(238,238,238)","rgb(238,238,238)" ],
         success: function(payload) {
           $(".song-detail").css({"background-color":payload.dominant})
           $("#_reproductor_").css({"background-color":payload.dominant})
         }
       });
     },
-    isPlaying:!app.reproductor.selector.paused,
     isFirtTime:function(){
       if(!app.reproductor.interval){
         var intervalTrack = setInterval(function () {
