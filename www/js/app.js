@@ -16,10 +16,10 @@ $$("#txt_busqueda").blur(function () {
 });
 
 $$("#btn_show_detail").on("click", function () {
-  $("#img_cover_detail")[0].src = app.result.items[app.result.itemSeleted].img;
-  $(".background-detail")[0].style.backgroundImage = "URL(" + app.result.items[app.result.itemSeleted].img + ")"
-  $("#lbl_title_alt").text(app.result.items[app.result.itemSeleted].titulo.artista);
-  $('#lbl_artist_alt').text(app.result.items[app.result.itemSeleted]);
+  $("#img_cover_detail")[0].src = app.result.items[app.result.itemSeleted].img_alt;
+  $(".background-detail")[0].style.backgroundImage = "URL(" + app.result.items[app.result.itemSeleted].img_alt + ")"
+  $("#lbl_title_alt").text(app.result.items[app.result.itemSeleted].titulo);
+  $('#lbl_artist_alt').text(app.result.items[app.result.itemSeleted].artista);
   //$('#totalTime').text("");       ///>>>>>>>>>Falta obtener la duracion de la cancion!
   app.reproductor.getColorPalette();
   myApp.popup('.popup-detail');
@@ -80,8 +80,8 @@ var app = {
   },
   untils: {
     user_id: "fromweb",
-    serviceURL: "http://192.168.1.11/raptor/post/",
-    host: "http://192.168.1.11/",
+    serviceURL: "http://192.168.10.104:8080/raptor/post/",
+    host: "http://192.168.10.104:8080/",
     toServer: function (method, data, url, fn) {
       try {
         app.loader.show()
@@ -268,6 +268,7 @@ var app = {
     },
     playSeleted: function () {
       app.reproductor.getTrack(app.result.itemSeleted);
+      app.modal.closeModal('.popover-menu');
     },
     error: function () {
       src = app.reproductor.selector.src
