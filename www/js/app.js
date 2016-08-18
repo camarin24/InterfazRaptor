@@ -230,13 +230,13 @@ var app = {
     play: function (src) {
       if (src === undefined) { //El usuario pauso la cancion y ahora retorna la reproducion
         $("#btn_play_pause").attr("src", "img/ic_pause_white_24px.svg");
+        $("#btn_play_pause_detail").attr("src", "img/ic_pause_white_24px.svg");
         MusicControls.updateIsPlaying(true);
         app.reproductor.selector.play();
         return;
       }//Se reproduce una nueva cancion
       app.reproductor.selector.src = src;
       app.reproductor.selector.load();
-
       data_controls = {
         track: app.result.items[app.result.itemSeleted].titulo,
         artist: app.result.items[app.result.itemSeleted].artista,
@@ -258,11 +258,14 @@ var app = {
       $("#reproductor")[0].style.opacity = "1";
 
       $("#btn_play_pause").attr("src", "img/ic_pause_white_24px.svg");
+      $("#btn_play_pause_detail").attr("src", "img/ic_pause_white_24px.svg");
       app.reproductor.selector.play();
+      app.reproductor.isFirtTime();
       start_remote_controls(data_controls);
     },
     pausa: function () {
       $("#btn_play_pause").attr("src", "img/ic_play_arrow_white_24px.svg");
+      $("#btn_play_pause_detail").attr("src", "img/ic_play_arrow_white_24px.svg");
       MusicControls.updateIsPlaying(false);
       app.reproductor.selector.pause();
     },
@@ -318,6 +321,17 @@ var app = {
           $("#_reproductor_").css({"background-color":payload.dominant})
         }
       });
+    },
+    isPlaying:!app.reproductor.selector.paused,
+    isFirtTime:function(){
+      if(!app.reproductor.interval){
+        var intervalTrack = setInterval(function () {
+          if(app.reproductor.isPlaying){
+              app.reproductor.currentTimeToProgressBar()
+          }
+        }, 1000);
+        app.reproductor.interval = true;
+      }
     }
   },
   modal: {
