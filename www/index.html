@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>Raptor</title>
+  <!-- Path to Framework7 Library CSS-->
+  <link rel="stylesheet" href="css/framework7.ios.min.css">
+  <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+  <!-- Path to your custom app styles-->
+  <link rel="stylesheet" href="css/app.css">
+  <script type="text/javascript" src="cordova.js"></script>
+</head>
+
+<body>
+  <!-- Status bar overlay for fullscreen mode-->
+  <div class="statusbar-overlay"></div>
+  <!-- Panels overlay-->
+  <div class="panel-overlay"></div>
+  <!-- Left panel with reveal effect-->
+  <div class="panel panel-left panel-reveal">
+    <div class="content-block">
+      <p>
+        <img src="img/raptor_alt.png" id="img_logo_menu" alt="Raptor_aly" />
+      </p>
+      <div id="panel">
+        <p class="menuItem"><a href="#" class="open-right-panel">Buscar</a></p>
+        <p class="menuItem"><a href="#" class="open-right-panel">Playlists</a></p>
+        <p class="menuItem"><a href="#" class="open-right-panel">Descargado</a></p>
+        <p class="menuItem"><a href="#" class="open-right-panel">Enviar un comentario</a></p>
+        <p class="menuItem"><a href="#" class="open-right-panel" id="lbl_id">noload</a></p>
+
+      </div>
+    </div>
+  </div>
+  <!-- Views-->
+  <div class="views theme-white">
+    <!-- Your main view, should have "view-main" class-->
+    <div class="view view-main">
+      <!-- Top Navbar-->
+      <div class="navbar tono_negro">
+        <div class="navbar-inner">
+          <!-- We have home navbar without left link-->
+          <div class="center sliding">
+            <span id="lbl_titulo">
+              <img src="img/loaders/oval.svg" alt="" />
+            </span>
+          </div>
+          <div class="right">
+            <a href="#" class="link icon-only open-panel">
+              <!-- <i class="icon icon-bars"></i> -->
+              <img src="img/ic_menu_white_24px.svg" alt="Menu icon" />
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
+      <div class="pages navbar-through toolbar-through">
+        <!-- Page, data-page contains page name-->
+        <div data-page="index" class="page">
+
+          <div class="background_img page-content">
+
+            <div id="reproductor">
+              <audio>
+                <source src="mp3/flume.mp3" type="audio/mp3" />
+              </audio>
+              <div class="row">
+                <div class="col-15">
+                  <img id="cover_alt" height="40" src="www/img/raptor_alt.png" alt="" />
+                </div>
+                <div class="col-50" id="btn_show_detail" style="height: 100px;">
+                  <span id="title_alt">Around The World</span>
+                  <br />
+                  <span id="art_alt">Daft Punk</span>
+                </div>
+                <div class="col-10">
+                  <img class="rpt_control" style="padding-top: 10px;" src="img/ic_skip_previous_white_24px.svg" height="30" alt="BACK" />
+                </div>
+                <div class="col-10">
+                  <img class="rpt_control" id="btn_play_pause" src="img/ic_pause_white_24px.svg" height="35" alt="PLAY" onclick="app.reproductor.playPause()" />
+                </div>
+                <div class="col-10">
+                  <img class="rpt_control" style="padding-top: 10px;" src="img/ic_skip_next_white_24px.svg" height="30" alt="NEXT" />
+                </div>
+                <div class="col-5">
+
+                </div>
+              </div>
+            </div>
+
+            <div id="objecto_buscar">
+              <img src="img/raptor.png" alt="Raptor" id="img_logo" />
+
+              <div class="list-block">
+                <ul class="border" id="border_content">
+                  <li>
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <div class="item-input">
+                          <input type="text" id="txt_busqueda" placeholder="Buscar">
+                          <a href="#" id="btn_cancel">
+                            <img src="img/ic_close_black_24px.svg" alt="Close Button" />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+            <div id="contenido" style="display: none;">
+              <div id="div_state">
+                <span>Recomendado hoy para ti</span>
+              </div>
+
+              <div id="objecto_resultado">
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- Bottom Toolbar-->
+      <div class="toolbar tono_negro" style="display: none;">
+        <div class="toolbar-inner">
+          <a href="#" class="color-black link" style="padding-left: 50px; padding-right: 50px;">Descarga toda tu musica gratis</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal popover-menu modal-in">
+    <div class="modal-inner">
+      <div class="card demo-card-header-pic">
+        <div style="background-image: url()" valign="bottom" class="card-header color-white no-border">
+          <div class="card-hoverlay"></div>
+          <div class="header">
+            <span class="titulo title">Nevermind</span>
+            <span class="artist" style="white-space: nowrap;">De J.A.C.K</span>
+            <span class="album" style="white-space: nowrap;">- Classics</span>
+          </div>
+        </div>
+        <div class="card-content">
+          <div class="card-content-inner">
+            <div class="list-block">
+              <ul>
+                <li><a href="#" class="list-button item-link" onclick="app.reproductor.playSeleted();">Escuchar</a></li>
+                <li><a href="#" class="list-button item-link">Descargar</a></li>
+                <li><a href="#" class="list-button item-link">Reportar</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Detalle de las canciones-->
+  <div class="popup popup-detail">
+    <div class="background-detail" style="background-image: url(none)">
+    </div>
+    <div class="navbar-inner nav-detail">
+      <!-- We have home navbar without left link-->
+      <div class="center sliding">
+        <span id="">
+          <img src="img/ic_arrow_back_white_24px.svg" class="close-popup" alt="Back" />
+        </span>
+      </div>
+    </div>
+    <div class="content-block">
+      <div class="row album-image">
+        <div class="col-100 align-center">
+          <img id="img_cover_detail" src="https://i1.sndcdn.com/artworks-000119176498-r2emud-t500x500.jpg" alt="" class="" />
+        </div>
+      </div>
+
+    </div>
+
+    <div id="_reproductor" style="opacity:1;background-color:transparent;" class="detail-player">
+      <div class="song-detail white">
+        <span class="song-tittle" id="lbl_title_alt">You and Me</span> <br>
+        <span class="song-artist" id="lbl_artist_alt">Flume</span>
+      </div>
+      <div id="_reproductor_" style="padding-top:10px;background-color:#362d42;">
+        <div class="row">
+          <div class="col-15 align-center dummy-space">
+            <label id="currentTime">00:00</label>
+          </div>
+          <div class="col-70">
+            <div class="progress-bar-inverse"></div>
+            <div style="width:100%" id="song-progress" onclick="app.reproductor.setSongPosition(event)">
+              <div class="progress-bar"></div>
+            </div>
+          </div>
+          <div class="col-15 align-center">
+            <label id="totalTime">00:00</label>
+          </div>
+        </div>
+        <div class="row" style="padding:10px 0px;">
+          <div class="col-10">
+          </div>
+          <div class="col-27 align-center">
+            <img class="rpt_control" style="padding-top: 10px;" src="img/ic_skip_previous_white_24px.svg" height="30" alt="BACK" />
+          </div>
+          <div class="col-27 align-center">
+            <img class="rpt_control" id="btn_play_pause" src="img/ic_pause_white_24px.svg" height="35" alt="PLAY" onclick="app.reproductor.playPause()" />
+          </div>
+          <div class="col-27 align-center">
+            <img class="rpt_control" style="padding-top: 10px;" src="img/ic_skip_next_white_24px.svg" height="30" alt="NEXT" />
+          </div>
+          <div class="col-10">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay "></div>
+  <!-- Path to Framework7 Library JS-->
+  <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+  <script type="text/javascript" src="js/framework7.js"></script>
+  <script type="text/javascript" src="js/rgbaster.min.js"></script>
+  <!-- Path to your app js-->
+  <script type="text/javascript" src="js/color-thief.js"></script>
+  <script type="text/javascript" src="js/admob_simple.js"></script>
+  <script type="text/javascript" src="js/remote_control.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="js/cocomo.js"></script>
+</body>
+
+</html>
