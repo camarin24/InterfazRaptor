@@ -340,7 +340,7 @@ height: 150px;
 
 /*Detalle de la cancion*/
 .background-detail{
-  /*background-image: url(https://i1.sndcdn.com/artworks-000119176498-r2emud-t500x500.jpg);*/
+  background-image: url(https://i1.sndcdn.com/artworks-000118009153-y6qirl-t500x500.jpg);
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -351,7 +351,7 @@ height: 150px;
   max-height: 91%;
   filter: blur(10px);
   z-index: 0;
-  margin: -15px;
+  margin: -30px;
 }
 .nav-detail{
   max-height: 45px;

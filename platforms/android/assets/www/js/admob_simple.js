@@ -1,48 +1,48 @@
 var admobid = {};
 
 // TODO: replace the following ad units with your own
-if( /(android)/i.test(navigator.userAgent) ) { 
-   admobid = { // for Android
-      banner: 'ca-app-pub-2914840006608630/8148456102',
-      interstitial: 'ca-app-pub-2914840006608630/2101922502'
+if (/(android)/i.test(navigator.userAgent)) {
+    admobid = { // for Android
+        banner: 'ca-app-pub-2914840006608630/8148456102',
+        interstitial: 'ca-app-pub-2914840006608630/2101922502'
     };
-  } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
+} else if (/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
     admobid = { // for iOS
-      banner: 'ca-app-pub-2914840006608630/8148456102',
-      interstitial: 'ca-app-pub-2914840006608630/2101922502'
+        banner: 'ca-app-pub-2914840006608630/8148456102',
+        interstitial: 'ca-app-pub-2914840006608630/2101922502'
     };
-  } else {
+} else {
     admobid = { // for Windows Phone
-      banner: 'ca-app-pub-2914840006608630/8148456102',
-      interstitial: 'ca-app-pub-2914840006608630/2101922502'
+        banner: 'ca-app-pub-2914840006608630/8148456102',
+        interstitial: 'ca-app-pub-2914840006608630/2101922502'
     };
 }
 
 function initAdmob() {
-  if (! AdMob ) { alert( 'admob plugin not ready' ); return; }
+    if (!AdMob) { alert('admob plugin not ready'); return; }
+    if (app.untils.isPurchase) { return; }
+    // this will create a banner on startup
+    AdMob.createBanner({
+        adId: admobid.banner,
+        position: AdMob.AD_POSITION.BOTTOM_CENTER,
+        isTesting: true,
+        overlap: false,
+        offsetTopBar: false,
+        bgColor: 'black'
+    });
 
-  // this will create a banner on startup
-  AdMob.createBanner( {
-    adId: admobid.banner,
-    position: AdMob.AD_POSITION.BOTTOM_CENTER,
-    isTesting: true,
-    overlap: false,
-    offsetTopBar: false,
-    bgColor: 'black'
-  } );
-
-  // this will load a full screen ad on startup
-  AdMob.prepareInterstitial({
-    adId: admobid.interstitial,
-    isTesting: true,
-    autoShow: false
-  });
+    // this will load a full screen ad on startup
+    AdMob.prepareInterstitial({
+        adId: admobid.interstitial,
+        isTesting: true,
+        autoShow: false
+    });
 }
 //if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
 //    document.addEventListener('deviceready', initApp, false);
-    
+
 //} else {
-    
+
 //}
 
 
