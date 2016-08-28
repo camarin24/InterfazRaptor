@@ -87,8 +87,8 @@ var app = {
     untils: {
         isPurchase : true,
         user_id: "fromweb",
-        serviceURL: "http://192.168.1.9/raptor/post/",
-        host: "http://192.168.1.9/",
+        serviceURL: "http://192.168.1.4/raptor/post/",
+        host: "http://192.168.1.4/",
         toServer: function (method, data, url, fn) {
             try {
                 app.loader.show()
@@ -224,6 +224,8 @@ var app = {
     },
     reproductor: {
         selector: document.getElementsByTagName("audio")[0],
+        playList: {},
+        itemPlaying: "",
         getTrack: function (id) {
             app.untils.toServer("POST", { id: id, id_user: app.untils.user_id }, "track/download", function (data) {
                 if (typeof data.data.trackURL == "undefined") {
@@ -246,12 +248,20 @@ var app = {
                 app.reproductor.selector.play();
                 return;
             }//Se reproduce una nueva cancion
+
+            /// Actulizar playList
+            if (app.reproductor.playList !== app.result.items) {
+                app.reproductor.playList = app.result.items;
+            }
+
+            app.reproductor.itemPlaying = app.result.itemSeleted;
+
             app.reproductor.selector.src = src;
             app.reproductor.selector.load();
             data_controls = {
-                track: app.result.items[app.result.itemSeleted].titulo,
-                artist: app.result.items[app.result.itemSeleted].artista,
-                cover: app.result.items[app.result.itemSeleted].img,
+                track: app.reproductor.playList[app.result.itemSeleted].titulo,
+                artist: app.reproductor.playList[app.result.itemSeleted].artista,
+                cover: app.reproductor.playList[app.result.itemSeleted].img,
 
                 isPlaying: true,
                 dismissable: false,
@@ -260,12 +270,12 @@ var app = {
                 hasNext: true,
                 hasClose: false,
 
-                ticker: 'Escuchando ' + app.result.items[app.result.itemSeleted].titulo
+                ticker: 'Escuchando ' + app.reproductor.playList[app.result.itemSeleted].titulo
             };
 
-            $("#cover_alt")[0].src = app.result.items[app.result.itemSeleted].img;
-            $("#title_alt").text(app.result.items[app.result.itemSeleted].titulo);
-            $("#art_alt").text(app.result.items[app.result.itemSeleted].artista);
+            $("#cover_alt")[0].src = app.reproductor.playList[app.result.itemSeleted].img;
+            $("#title_alt").text(app.reproductor.playList[app.result.itemSeleted].titulo);
+            $("#art_alt").text(app.reproductor.playList[app.result.itemSeleted].artista);
             $("#reproductor")[0].style.opacity = "1";
 
             $("#btn_play_pause").attr("src", "img/ic_pause_white_24px.svg");
@@ -288,6 +298,15 @@ var app = {
             
             //MusicControls.updateIsPlaying(false);
             app.reproductor.selector.pause();
+        },
+        next: function () {
+            var keys = Object.keys(app.reproductor.playList);
+            console.log(keys.indexOf(app.result.itemSeleted))
+
+            for (key in app.reproductor.playList)
+            {
+                console.log(key)
+            }
         },
         playSeleted: function () {
             app.reproductor.getTrack(app.result.itemSeleted);
