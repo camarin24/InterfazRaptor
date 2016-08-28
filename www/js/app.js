@@ -295,7 +295,7 @@ var app = {
             } else {
                 $("#btn_play_pause_detail").attr("src", "img/ic_play_arrow_black_24px.svg");
             }
-            
+
             //MusicControls.updateIsPlaying(false);
             app.reproductor.selector.pause();
         },
@@ -330,6 +330,9 @@ var app = {
             var x = event.clientX - (document.querySelector(".dummy-space").clientWidth + 15);
             var mousePositions = document.getElementById('song-progress');
             var por = (100 * x) / mousePositions.clientWidth
+            var totalTime = app.reproductor.selector.duration;
+            console.log((100 * por) / totalTime);
+            app.reproductor.selector.currentTime = (por * totalTime) / 100;
             $(".progress-bar").css({ "width": por + "%" });
         },
         getSongDuration: function () {
