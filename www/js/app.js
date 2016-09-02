@@ -15,21 +15,8 @@ $$("#txt_busqueda").blur(function () {
     app.home.down();
 });
 
-$$("#btn_show_detail").on("click", function () {
-
-    $("#lbl_title_alt").text(app.result.items[app.result.itemSeleted].titulo);
-    $('#lbl_artist_alt').text(app.result.items[app.result.itemSeleted].artista);
-    //$('#totalTime').text("");       ///>>>>>>>>>Falta obtener la duracion de la cancion!
-
-    var temp = $(".background-detail")[0].style.backgroundImage.split(',')[0].replace('url("', "").replace('")', "");
-    if (temp != app.result.items[app.result.itemSeleted].img_alt) {
-        $("#img_cover_detail")[0].src = app.result.items[app.result.itemSeleted].img_alt;
-        $(".background-detail")[0].style.backgroundImage = "URL(" + app.result.items[app.result.itemSeleted].img_alt + "),URL(img/background.png)";
-        app.reproductor.getColorPalette();
-    }
-
-    myApp.popup('.popup-detail');
-
+$$("#btn_show_detail").on("click", function () {    
+  app.reproductor.showDetail();
 });
 
 var can_do_search = true;
@@ -87,8 +74,8 @@ var app = {
     untils: {
         isPurchase : true,
         user_id: "fromweb",
-        serviceURL: "http://192.168.1.4/raptor/post/",
-        host: "http://192.168.1.4/",
+        serviceURL: "http://192.168.10.104:8080/raptor/post/",
+        host: "http://192.168.10.104:8080/",
         toServer: function (method, data, url, fn) {
             try {
                 app.loader.show()
@@ -160,9 +147,9 @@ var app = {
         clearItems: function () {
             app.result.items = {};
         },
-        getItem: function (id, titulo, artista, album, link_preview, img, img_alt) {
-            app.result.items[id] = { titulo: titulo, artista: artista, album: album, link_preview: link_preview, img: img, img_alt: img_alt };
-            return '<div class="card_result">\
+        getItem: function (id, titulo, artista, album, link_preview, img, img_alt,index) {
+            app.result.items[id] = { titulo: titulo, artista: artista, album: album, link_preview: link_preview, img: img, img_alt: img_alt, index: index };
+            return '<div class="card_result" onclick="app.reproductor.playClick(this);">\
       <div class="row">\
       <div class="col-20">\
       <img class="cover lazy" src="' + img + '" onerror="app.result.imgLoadError(this);" alt=""/>\
@@ -214,9 +201,10 @@ var app = {
             if (lon === 0) {
                 $$("#div_state").text("No hay resultados para '" + query + "'");
             }
+            app.result.items = {};
             var template = "";
             for (var i = 0; i < lon; i++) {
-                template += app.result.getItem(data[i].id, data[i].title, data[i].artist.name, data[i].album.title, data[i].preview, data[i].album.cover, data[i].album.cover_big);
+                template += app.result.getItem(data[i].id, data[i].title, data[i].artist.name, data[i].album.title, data[i].preview, data[i].album.cover, data[i].album.cover_big, i);
             }
             $$("#objecto_resultado").html(template);
             app.result.startContextMenu();
@@ -251,6 +239,7 @@ var app = {
 
             /// Actulizar playList
             if (app.reproductor.playList !== app.result.items) {
+                app.reproductor.playList = {};
                 app.reproductor.playList = app.result.items;
             }
 
@@ -300,17 +289,53 @@ var app = {
             app.reproductor.selector.pause();
         },
         next: function () {
-            var keys = Object.keys(app.reproductor.playList);
-            console.log(keys.indexOf(app.result.itemSeleted))
+            var currentIndex = app.reproductor.playList[app.result.itemSeleted].index + 1;
+            for (item in app.reproductor.playList) 
+              {
+                if ( app.reproductor.playList[item].index == currentIndex )
+                {
+                  app.result.itemSeleted = item;
+                  app.reproductor.playSeleted();
+                  app.reproductor.showDetail(true);
+                  return;
+                }
+              }
+        },
+        back: function () {
+            var currentIndex = app.reproductor.playList[app.result.itemSeleted].index - 1;
+            for (item in app.reproductor.playList) 
+              {
+                if ( app.reproductor.playList[item].index == currentIndex )
+                {
+                  app.result.itemSeleted = item;
+                  app.reproductor.playSeleted();
+                  app.reproductor.showDetail(true);
+                  return;
+                }
+              }
+        },
+        showDetail: function (isButton=false) {
+          $("#lbl_title_alt").text(app.result.items[app.result.itemSeleted].titulo);
+          $('#lbl_artist_alt').text(app.result.items[app.result.itemSeleted].artista);
+          //$('#totalTime').text("");       ///>>>>>>>>>Falta obtener la duracion de la cancion!
 
-            for (key in app.reproductor.playList)
-            {
-                console.log(key)
-            }
+          var temp = $(".background-detail")[0].style.backgroundImage.split(',')[0].replace('url("', "").replace('")', "");
+          if (temp != app.result.items[app.result.itemSeleted].img_alt) {
+              $("#img_cover_detail")[0].src = app.result.items[app.result.itemSeleted].img_alt;
+              $(".background-detail")[0].style.backgroundImage = "URL(" + app.result.items[app.result.itemSeleted].img_alt + "),URL(img/background.png)";
+              app.reproductor.getColorPalette();
+          }
+          if (!isButton) {
+            myApp.popup('.popup-detail');
+          }          
         },
         playSeleted: function () {
             app.reproductor.getTrack(app.result.itemSeleted);
             app.modal.closeModal('.popover-menu');
+        },
+        playClick: function (element) {
+          app.result.itemSeleted = element.childNodes[1].childNodes[5].childNodes[1].childNodes[1].getAttribute("track");
+          app.reproductor.playSeleted();
         },
         error: function () {
             src = app.reproductor.selector.src
@@ -331,7 +356,7 @@ var app = {
             var mousePositions = document.getElementById('song-progress');
             var por = (100 * x) / mousePositions.clientWidth
             var totalTime = app.reproductor.selector.duration;
-            console.log((100 * por) / totalTime);
+            //console.log((100 * por) / totalTime);
             app.reproductor.selector.currentTime = (por * totalTime) / 100;
             $(".progress-bar").css({ "width": por + "%" });
         },

@@ -4,10 +4,10 @@ function start_remote_controls(data) {
     function events(action) {
         switch(action) {
             case 'music-controls-next':
-                alert("next");
+                app.reproductor.next();
                 break;
             case 'music-controls-previous':
-                alert("anterior");
+                app.reproductor.back();
                 break;
             case 'music-controls-pause':
                 app.reproductor.playPause();
