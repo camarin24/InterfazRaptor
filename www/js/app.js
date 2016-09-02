@@ -89,7 +89,8 @@ var app = {
                     fn(datos);
                 }).fail(function (wx, data, ww) {
                     //myApp.alert('No es posible conectar con el servidor.', '<img src="img/ic_error_black_24px.svg">');
-                    console.log({ url: app.untils.serviceURL + url, data: postdata });
+                    //console.log({ url: app.untils.serviceURL + url, data: postdata });
+                    console.log(ww);
                 }).always(function () {
                     app.loader.hide()
                 })
@@ -149,7 +150,8 @@ var app = {
         },
         getItem: function (id, titulo, artista, album, link_preview, img, img_alt,index) {
             app.result.items[id] = { titulo: titulo, artista: artista, album: album, link_preview: link_preview, img: img, img_alt: img_alt, index: index };
-            return '<div class="card_result" onclick="app.reproductor.playClick(this);">\
+            //app.reproductor.playClick(this)
+            return '<div class="card_result" onclick=";">\
       <div class="row">\
       <div class="col-20">\
       <img class="cover lazy" src="' + img + '" onerror="app.result.imgLoadError(this);" alt=""/>\
@@ -433,6 +435,23 @@ var app = {
                 app.reproductor.interval = true;
             }
         }
+    },
+    playList : {
+      create : function ( name ) {
+        app.untils.toServer("POST",{ id : app.untils.user_id , nombre : name }, "playlist/newPlaylist", function (data) { 
+          console.log(data)
+        });
+      },
+      addItem : function (  ) {
+        app.untils.toServer("POST",{ id :"3" , track: JSON.stringify( app.result.items[app.result.itemSeleted] ).replace(/"/g,';')}, "playlist/addItem", function (data) { 
+          //console.log(data)
+        });
+      },
+      listPlaylist : function ( ) {
+        app.untils.toServer("POST",{ id :app.untils.user_id }, "playlist/listByUser", function (data) { 
+          console.log(data)
+        });
+      } 
     },
     modal: {
         openModal: function (selector, elem) {
