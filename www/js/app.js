@@ -89,8 +89,8 @@ var app = {
                     fn(datos);
                 }).fail(function (wx, data, ww) {
                     //myApp.alert('No es posible conectar con el servidor.', '<img src="img/ic_error_black_24px.svg">');
-                    //console.log({ url: app.untils.serviceURL + url, data: postdata });
-                    console.log(ww);
+                    console.log({ url: app.untils.serviceURL + url, data: postdata });
+                    //console.log(ww);
                 }).always(function () {
                     app.loader.hide()
                 })
@@ -149,7 +149,7 @@ var app = {
             app.result.items = {};
         },
         getItem: function (id, titulo, artista, album, link_preview, img, img_alt,index) {
-            app.result.items[id] = { titulo: titulo, artista: artista, album: album, link_preview: link_preview, img: img, img_alt: img_alt, index: index };
+            app.result.items[id] = { titulo: titulo, artista: artista, album: album, link_preview: link_preview, img: img, img_alt: img_alt, index: index, id : id };
             //app.reproductor.playClick(this)
             return '<div class="card_result" onclick=";">\
       <div class="row">\
@@ -239,12 +239,7 @@ var app = {
                 return;
             }//Se reproduce una nueva cancion
 
-            /// Actulizar playList
-            if (app.reproductor.playList !== app.result.items) {
-                app.reproductor.playList = {};
-                app.reproductor.playList = app.result.items;
-            }
-
+            
             app.reproductor.itemPlaying = app.result.itemSeleted;
 
             app.reproductor.selector.src = src;
@@ -317,23 +312,29 @@ var app = {
               }
         },
         showDetail: function (isButton=false) {
-          $("#lbl_title_alt").text(app.result.items[app.result.itemSeleted].titulo);
-          $('#lbl_artist_alt').text(app.result.items[app.result.itemSeleted].artista);
+          $("#lbl_title_alt").text(app.reproductor.playList[app.result.itemSeleted].titulo);
+          $('#lbl_artist_alt').text(app.reproductor.playList[app.result.itemSeleted].artista);
           //$('#totalTime').text("");       ///>>>>>>>>>Falta obtener la duracion de la cancion!
 
           var temp = $(".background-detail")[0].style.backgroundImage.split(',')[0].replace('url("', "").replace('")', "");
-          if (temp != app.result.items[app.result.itemSeleted].img_alt) {
-              $("#img_cover_detail")[0].src = app.result.items[app.result.itemSeleted].img_alt;
-              $(".background-detail")[0].style.backgroundImage = "URL(" + app.result.items[app.result.itemSeleted].img_alt + "),URL(img/background.png)";
+          if (temp != app.reproductor.playList[app.result.itemSeleted].img_alt) {
+              $("#img_cover_detail")[0].src = app.reproductor.playList[app.result.itemSeleted].img_alt;
+              $(".background-detail")[0].style.backgroundImage = "URL(" + app.reproductor.playList[app.result.itemSeleted].img_alt + "),URL(img/background.png)";
               app.reproductor.getColorPalette();
           }
           if (!isButton) {
             myApp.popup('.popup-detail');
           }          
         },
-        playSeleted: function () {
+        playSeleted: function (updatePlayList=false) {
             app.reproductor.getTrack(app.result.itemSeleted);
             app.modal.closeModal('.popover-menu');
+            if (updatePlayList) {/// Actulizar playList              
+              if (app.reproductor.playList !== app.result.items) {
+                  app.reproductor.playList = {};
+                  app.reproductor.playList = app.result.items;
+              }
+            }
         },
         playClick: function (element) {
           app.result.itemSeleted = element.childNodes[1].childNodes[5].childNodes[1].childNodes[1].getAttribute("track");
@@ -447,8 +448,13 @@ var app = {
           //console.log(data)
         });
       },
-      listPlaylist : function ( ) {
+      listPlaylists : function ( ) {
         app.untils.toServer("POST",{ id :app.untils.user_id }, "playlist/listByUser", function (data) { 
+          console.log(data)
+        });
+      },
+      listItems : function ( ) {
+        app.untils.toServer("POST",{ id : "3" }, "playlist/listItems", function (data) { 
           console.log(data)
         });
       } 
