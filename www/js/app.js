@@ -1,4 +1,7 @@
-var myApp = new Framework7();
+var myApp = new Framework7({
+    uniqueHistory:false,
+    pushState:true
+});
 
 var $$ = Dom7;
 
@@ -74,8 +77,8 @@ var app = {
     untils: {
         isPurchase : true,
         user_id: "fromweb",
-        serviceURL: "http://192.168.10.104:8080/raptor/post/",
-        host: "http://192.168.10.104:8080/",
+        serviceURL: "http://192.168.1.7/raptor/post/",
+        host: "http://192.168.1.7/",
         toServer: function (method, data, url, fn) {
             try {
                 app.loader.show()
