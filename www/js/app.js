@@ -1,12 +1,17 @@
 var myApp = new Framework7({
-    uniqueHistory:false,
-    pushState:true
+    fastClicks:true,
+    pushState:true,
+    cache:true,
+    swipeBackPage:true,
+    tapHold: true
 });
 
 var $$ = Dom7;
 
-var mainView = myApp.addView('.view-main', {
-    dynamicNavbar: true
+var mainView = myApp.addView('.view-main',{
+  domCache: true,
+  dynamicNavbar:true,
+  animateNavBackIcon:true
 });
 
 $$("#txt_busqueda").focus(function () {
@@ -18,7 +23,7 @@ $$("#txt_busqueda").blur(function () {
     app.home.down();
 });
 
-$$("#btn_show_detail").on("click", function () {    
+$$("#btn_show_detail").on("click", function () {
   app.reproductor.showDetail();
 });
 
@@ -48,6 +53,7 @@ $$("#btn_cancel").on("click", function () {
 $$(".modal-overlay").on("click", function () {
     app.modal.closeModal('.popover-menu');
 })
+
 
 var app = {
     load: function () {
@@ -242,7 +248,7 @@ var app = {
                 return;
             }//Se reproduce una nueva cancion
 
-            
+
             app.reproductor.itemPlaying = app.result.itemSeleted;
 
             app.reproductor.selector.src = src;
@@ -290,7 +296,7 @@ var app = {
         },
         next: function () {
             var currentIndex = app.reproductor.playList[app.result.itemSeleted].index + 1;
-            for (item in app.reproductor.playList) 
+            for (item in app.reproductor.playList)
               {
                 if ( app.reproductor.playList[item].index == currentIndex )
                 {
@@ -303,7 +309,7 @@ var app = {
         },
         back: function () {
             var currentIndex = app.reproductor.playList[app.result.itemSeleted].index - 1;
-            for (item in app.reproductor.playList) 
+            for (item in app.reproductor.playList)
               {
                 if ( app.reproductor.playList[item].index == currentIndex )
                 {
@@ -326,13 +332,14 @@ var app = {
               app.reproductor.getColorPalette();
           }
           if (!isButton) {
+            $(".popup-overlay").removeClass("modal-overlay-visible");
             myApp.popup('.popup-detail');
-          }          
+          }
         },
         playSeleted: function (updatePlayList=false) {
             app.reproductor.getTrack(app.result.itemSeleted);
             app.modal.closeModal('.popover-menu');
-            if (updatePlayList) {/// Actulizar playList              
+            if (updatePlayList) {/// Actulizar playList
               if (app.reproductor.playList !== app.result.items) {
                   app.reproductor.playList = {};
                   app.reproductor.playList = app.result.items;
@@ -442,25 +449,25 @@ var app = {
     },
     playList : {
       create : function ( name ) {
-        app.untils.toServer("POST",{ id : app.untils.user_id , nombre : name }, "playlist/newPlaylist", function (data) { 
+        app.untils.toServer("POST",{ id : app.untils.user_id , nombre : name }, "playlist/newPlaylist", function (data) {
           console.log(data)
         });
       },
       addItem : function (  ) {
-        app.untils.toServer("POST",{ id :"3" , track: JSON.stringify( app.result.items[app.result.itemSeleted] ).replace(/"/g,';')}, "playlist/addItem", function (data) { 
+        app.untils.toServer("POST",{ id :"3" , track: JSON.stringify( app.result.items[app.result.itemSeleted] ).replace(/"/g,';')}, "playlist/addItem", function (data) {
           //console.log(data)
         });
       },
       listPlaylists : function ( ) {
-        app.untils.toServer("POST",{ id :app.untils.user_id }, "playlist/listByUser", function (data) { 
+        app.untils.toServer("POST",{ id :app.untils.user_id }, "playlist/listByUser", function (data) {
           console.log(data)
         });
       },
       listItems : function ( ) {
-        app.untils.toServer("POST",{ id : "3" }, "playlist/listItems", function (data) { 
+        app.untils.toServer("POST",{ id : "3" }, "playlist/listItems", function (data) {
           console.log(data)
         });
-      } 
+      }
     },
     modal: {
         openModal: function (selector, elem) {
@@ -515,3 +522,52 @@ obj.scroll(function () {
 });
 
 app.reproductor.selector.onended = app.reproductor.pausa();
+$$('.list-block > ul li > a').on('taphold', function () {
+  myApp.sortableToggle('.sortable');
+});
+$$('.list-block > ul li').on('sort', function () {
+  myApp.sortableToggle('.sortable');
+});
+
+var pickerCustomToolbar = myApp.picker({
+    input: '#picker-custom-toolbar',
+    rotateEffect: false,
+    toolbarTemplate:
+        '<div class="toolbar">' +
+            '<div class="toolbar-inner">' +
+            '<div class="left">' +
+                '<a href="#" class="link close-picker"></a>' +
+            '</div>' +
+                '<div class="right">' +
+                    '<a href="#" class="link close-picker crear">Crear</a>' +
+                '</div>' +
+            '</div>' +
+        '</div>',
+    cols: [],
+    onOpen: function (picker) {
+      var html = '<div class="content-block no-margin" style="width: 100%;">'+
+                    '<div class="list-block">'+
+                      '<ul>'+
+                        '<li>'+
+                          '<div class="item-content">'+
+                            '<div class="item-inner">'+
+                              '<div class="item-input">'+
+                                '<input type="text" class="nombreLista" placeholder="Nombre de la lista">'+
+                              '</div>'+
+                            '</div>'+
+                          '</div>'+
+                        '</li>'+
+                        '</ul>'+
+                      '</div>'+
+                    '</div>';
+        picker.container.find('.picker-modal-inner').html(html);
+        picker.container.find('.crear').on("click",function(){
+
+            alert(picker.container.find('.nombreLista').val())
+        })
+    }
+});
+$("#addList").on("click",function(){
+  pickerCustomToolbar.open();
+  return false;
+})
