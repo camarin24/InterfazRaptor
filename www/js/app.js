@@ -83,8 +83,8 @@ var app = {
     untils: {
         isPurchase : true,
         user_id: "fromweb",
-        serviceURL: "http://192.168.1.7/raptor/post/",
-        host: "http://192.168.1.7/",
+        serviceURL: "http://127.0.0.1/raptor/post/",
+        host: "http://127.0.0.1/",
         toServer: function (method, data, url, fn) {
             try {
                 app.loader.show()
