@@ -242,6 +242,7 @@ height: 150px;
   white-space: nowrap;
   overflow: hidden;
   margin-bottom: -7px;
+  color: #fefefe;
 }
 
 .header .artist
@@ -254,6 +255,7 @@ height: 150px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+    color: #fefefe;
 }
 
 .header .album
@@ -264,6 +266,7 @@ height: 150px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+    color: #fefefe;
 }
 .card-hoverlay{
   height: 40vw;
@@ -400,4 +403,21 @@ height: 150px;
 }
 .song-artist{
   margin-top: 1px;
+}
+[data-page="listas"] .center{
+  color:#fefefe;
+}
+[data-page="listDetail"] .center{
+  color:#fefefe;
+}
+.no-margin{
+  margin: 0px;
+}
+.no-margin > ul li >a{
+  -moz-user-select: none;
+-webkit-user-select: none;
+user-select: none;
+}
+.picker-columns {
+  height: 153px;
 }

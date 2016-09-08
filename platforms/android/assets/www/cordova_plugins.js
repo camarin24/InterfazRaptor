@@ -37,7 +37,8 @@ module.exports.metadata =
     "cordova-plugin-admobpro": "2.19.1",
     "cordova-plugin-device": "1.1.2",
     "cordova-plugin-music-controls": "1.3",
-    "cordova-plugin-statusbar": "2.1.3"
+    "cordova-plugin-statusbar": "2.1.3",
+    "cordova-plugin-console": "1.0.3"
 };
 // BOTTOM OF METADATA
 });

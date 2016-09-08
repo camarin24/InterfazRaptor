@@ -1,9 +1,18 @@
-var myApp = new Framework7();
+try{
+var myApp = new Framework7({
+    fastClicks:true,
+    pushState:true,
+    cache:true,
+    swipeBackPage:true,
+    tapHold: true
+});
 
 var $$ = Dom7;
 
-var mainView = myApp.addView('.view-main', {
-    dynamicNavbar: true
+var mainView = myApp.addView('.view-main',{
+  domCache: true,
+  dynamicNavbar:true,
+  animateNavBackIcon:true
 });
 
 $$("#txt_busqueda").focus(function () {
@@ -16,16 +25,7 @@ $$("#txt_busqueda").blur(function () {
 });
 
 $$("#btn_show_detail").on("click", function () {
-    var temp = $(".background-detail")[0].style.backgroundImage.split(',')[0].replace('url("', "").replace('")', "");
-    if (temp != app.result.items[app.result.itemSeleted].img_alt) {
-        $("#img_cover_detail")[0].src = app.result.items[app.result.itemSeleted].img_alt;
-        $(".background-detail")[0].style.backgroundImage = "URL(" + app.result.items[app.result.itemSeleted].img_alt + "),URL(img/background.png)";
-        $("#lbl_title_alt").text(app.result.items[app.result.itemSeleted].titulo);
-        $('#lbl_artist_alt').text(app.result.items[app.result.itemSeleted].artista);
-        //$('#totalTime').text("");       ///>>>>>>>>>Falta obtener la duracion de la cancion!
-        app.reproductor.getColorPalette();
-    }
-    myApp.popup('.popup-detail');
+  app.reproductor.showDetail();
 });
 
 var can_do_search = true;
@@ -55,6 +55,7 @@ $$(".modal-overlay").on("click", function () {
     app.modal.closeModal('.popover-menu');
 })
 
+
 var app = {
     load: function () {
         $$(".background_img")[0].style.backgroundColor = app.paletteColor.getColor();
@@ -83,8 +84,8 @@ var app = {
     untils: {
         isPurchase : true,
         user_id: "fromweb",
-        serviceURL: "http://192.168.1.9/raptor/post/",
-        host: "http://192.168.1.9/",
+        serviceURL: "http://192.168.1.11/raptor/post/",
+        host: "http://192.168.1.11/",
         toServer: function (method, data, url, fn) {
             try {
                 app.loader.show()
@@ -99,6 +100,7 @@ var app = {
                 }).fail(function (wx, data, ww) {
                     //myApp.alert('No es posible conectar con el servidor.', '<img src="img/ic_error_black_24px.svg">');
                     console.log({ url: app.untils.serviceURL + url, data: postdata });
+                    //console.log(ww);
                 }).always(function () {
                     app.loader.hide()
                 })
@@ -156,9 +158,10 @@ var app = {
         clearItems: function () {
             app.result.items = {};
         },
-        getItem: function (id, titulo, artista, album, link_preview, img, img_alt) {
-            app.result.items[id] = { titulo: titulo, artista: artista, album: album, link_preview: link_preview, img: img, img_alt: img_alt };
-            return '<div class="card_result">\
+        getItem: function (id, titulo, artista, album, link_preview, img, img_alt,index) {
+            app.result.items[id] = { titulo: titulo, artista: artista, album: album, link_preview: link_preview, img: img, img_alt: img_alt, index: index, id : id };
+            //app.reproductor.playClick(this)
+            return '<div class="card_result" onclick=";">\
       <div class="row">\
       <div class="col-20">\
       <img class="cover lazy" src="' + img + '" onerror="app.result.imgLoadError(this);" alt=""/>\
@@ -210,9 +213,10 @@ var app = {
             if (lon === 0) {
                 $$("#div_state").text("No hay resultados para '" + query + "'");
             }
+            app.result.items = {};
             var template = "";
             for (var i = 0; i < lon; i++) {
-                template += app.result.getItem(data[i].id, data[i].title, data[i].artist.name, data[i].album.title, data[i].preview, data[i].album.cover, data[i].album.cover_big);
+                template += app.result.getItem(data[i].id, data[i].title, data[i].artist.name, data[i].album.title, data[i].preview, data[i].album.cover, data[i].album.cover_big, i);
             }
             $$("#objecto_resultado").html(template);
             app.result.startContextMenu();
@@ -220,6 +224,8 @@ var app = {
     },
     reproductor: {
         selector: document.getElementsByTagName("audio")[0],
+        playList: {},
+        itemPlaying: "",
         getTrack: function (id) {
             app.untils.toServer("POST", { id: id, id_user: app.untils.user_id }, "track/download", function (data) {
                 if (typeof data.data.trackURL == "undefined") {
@@ -238,16 +244,20 @@ var app = {
                 } else {
                     $("#btn_play_pause_detail").attr("src", "img/ic_pause_black_24px.svg");
                 }
-                MusicControls.updateIsPlaying(true);
+                //MusicControls.updateIsPlaying(true);
                 app.reproductor.selector.play();
                 return;
             }//Se reproduce una nueva cancion
+
+
+            app.reproductor.itemPlaying = app.result.itemSeleted;
+
             app.reproductor.selector.src = src;
             app.reproductor.selector.load();
             data_controls = {
-                track: app.result.items[app.result.itemSeleted].titulo,
-                artist: app.result.items[app.result.itemSeleted].artista,
-                cover: app.result.items[app.result.itemSeleted].img,
+                track: app.reproductor.playList[app.result.itemSeleted].titulo,
+                artist: app.reproductor.playList[app.result.itemSeleted].artista,
+                cover: app.reproductor.playList[app.result.itemSeleted].img,
 
                 isPlaying: true,
                 dismissable: false,
@@ -256,12 +266,12 @@ var app = {
                 hasNext: true,
                 hasClose: false,
 
-                ticker: 'Escuchando ' + app.result.items[app.result.itemSeleted].titulo
+                ticker: 'Escuchando ' + app.reproductor.playList[app.result.itemSeleted].titulo
             };
 
-            $("#cover_alt")[0].src = app.result.items[app.result.itemSeleted].img;
-            $("#title_alt").text(app.result.items[app.result.itemSeleted].titulo);
-            $("#art_alt").text(app.result.items[app.result.itemSeleted].artista);
+            $("#cover_alt")[0].src = app.reproductor.playList[app.result.itemSeleted].img;
+            $("#title_alt").text(app.reproductor.playList[app.result.itemSeleted].titulo);
+            $("#art_alt").text(app.reproductor.playList[app.result.itemSeleted].artista);
             $("#reproductor")[0].style.opacity = "1";
 
             $("#btn_play_pause").attr("src", "img/ic_pause_white_24px.svg");
@@ -272,7 +282,7 @@ var app = {
             }
             app.reproductor.selector.play();
             app.reproductor.isFirtTime();
-            start_remote_controls(data_controls);
+            //start_remote_controls(data_controls);
         },
         pausa: function () {
             $("#btn_play_pause").attr("src", "img/ic_play_arrow_white_24px.svg");
@@ -281,13 +291,65 @@ var app = {
             } else {
                 $("#btn_play_pause_detail").attr("src", "img/ic_play_arrow_black_24px.svg");
             }
-            
-            MusicControls.updateIsPlaying(false);
+
+            //MusicControls.updateIsPlaying(false);
             app.reproductor.selector.pause();
         },
-        playSeleted: function () {
+        next: function () {
+            var currentIndex = app.reproductor.playList[app.result.itemSeleted].index + 1;
+            for (item in app.reproductor.playList)
+              {
+                if ( app.reproductor.playList[item].index == currentIndex )
+                {
+                  app.result.itemSeleted = item;
+                  app.reproductor.playSeleted();
+                  app.reproductor.showDetail(true);
+                  return;
+                }
+              }
+        },
+        back: function () {
+            var currentIndex = app.reproductor.playList[app.result.itemSeleted].index - 1;
+            for (item in app.reproductor.playList)
+              {
+                if ( app.reproductor.playList[item].index == currentIndex )
+                {
+                  app.result.itemSeleted = item;
+                  app.reproductor.playSeleted();
+                  app.reproductor.showDetail(true);
+                  return;
+                }
+              }
+        },
+        showDetail: function (isButton) {
+          $("#lbl_title_alt").text(app.reproductor.playList[app.result.itemSeleted].titulo);
+          $('#lbl_artist_alt').text(app.reproductor.playList[app.result.itemSeleted].artista);
+          //$('#totalTime').text("");       ///>>>>>>>>>Falta obtener la duracion de la cancion!
+            $(".popup-overlay").removeClass("modal-overlay-visible");
+          var temp = $(".background-detail")[0].style.backgroundImage.split(',')[0].replace('url("', "").replace('")', "");
+          if (temp != app.reproductor.playList[app.result.itemSeleted].img_alt) {
+              $("#img_cover_detail")[0].src = app.reproductor.playList[app.result.itemSeleted].img_alt;
+              $(".background-detail")[0].style.backgroundImage = "URL(" + app.reproductor.playList[app.result.itemSeleted].img_alt + "),URL(img/background.png)";
+              app.reproductor.getColorPalette();
+          }
+          if (!isButton) {
+            myApp.popup('.popup-detail');
+            $(".popup-overlay").removeClass("modal-overlay-visible");
+          }
+        },
+        playSeleted: function (updatePlayList) {
             app.reproductor.getTrack(app.result.itemSeleted);
             app.modal.closeModal('.popover-menu');
+            if (updatePlayList) {/// Actulizar playList
+              if (app.reproductor.playList !== app.result.items) {
+                  app.reproductor.playList = {};
+                  app.reproductor.playList = app.result.items;
+              }
+            }
+        },
+        playClick: function (element) {
+          app.result.itemSeleted = element.childNodes[1].childNodes[5].childNodes[1].childNodes[1].getAttribute("track");
+          app.reproductor.playSeleted();
         },
         error: function () {
             src = app.reproductor.selector.src
@@ -307,6 +369,9 @@ var app = {
             var x = event.clientX - (document.querySelector(".dummy-space").clientWidth + 15);
             var mousePositions = document.getElementById('song-progress');
             var por = (100 * x) / mousePositions.clientWidth
+            var totalTime = app.reproductor.selector.duration;
+            //console.log((100 * por) / totalTime);
+            app.reproductor.selector.currentTime = (por * totalTime) / 100;
             $(".progress-bar").css({ "width": por + "%" });
         },
         getSongDuration: function () {
@@ -383,6 +448,28 @@ var app = {
             }
         }
     },
+    playList : {
+      create : function ( name ) {
+        app.untils.toServer("POST",{ id : app.untils.user_id , nombre : name }, "playlist/newPlaylist", function (data) {
+          console.log(data)
+        });
+      },
+      addItem : function (  ) {
+        app.untils.toServer("POST",{ id :"3" , track: JSON.stringify( app.result.items[app.result.itemSeleted] ).replace(/"/g,';')}, "playlist/addItem", function (data) {
+          //console.log(data)
+        });
+      },
+      listPlaylists : function ( ) {
+        app.untils.toServer("POST",{ id :app.untils.user_id }, "playlist/listByUser", function (data) {
+          console.log(data)
+        });
+      },
+      listItems : function ( ) {
+        app.untils.toServer("POST",{ id : "3" }, "playlist/listItems", function (data) {
+          console.log(data)
+        });
+      }
+    },
     modal: {
         openModal: function (selector, elem) {
             if ($(selector).length === 0) return false;
@@ -436,3 +523,57 @@ obj.scroll(function () {
 });
 
 app.reproductor.selector.onended = app.reproductor.pausa();
+$$('.list-block > ul li > a').on('taphold', function () {
+  myApp.sortableToggle('.sortable');
+});
+$$('.list-block > ul li').on('sort', function () {
+  myApp.sortableToggle('.sortable');
+});
+
+var pickerCustomToolbar = myApp.picker({
+    input: '#picker-custom-toolbar',
+    rotateEffect: false,
+    toolbarTemplate:
+        '<div class="toolbar">' +
+            '<div class="toolbar-inner">' +
+            '<div class="left">' +
+                '<a href="#" class="link close-picker"></a>' +
+            '</div>' +
+                '<div class="right">' +
+                    '<a href="#" class="link close-picker crear">Crear</a>' +
+                '</div>' +
+            '</div>' +
+        '</div>',
+    cols: [],
+    onOpen: function (picker) {
+      var html = '<div class="content-block no-margin" style="width: 100%;">'+
+                    '<div class="list-block">'+
+                      '<ul>'+
+                        '<li>'+
+                          '<div class="item-content">'+
+                            '<div class="item-inner">'+
+                              '<div class="item-input">'+
+                                '<input type="text" class="nombreLista" placeholder="Nombre de la lista">'+
+                              '</div>'+
+                            '</div>'+
+                          '</div>'+
+                        '</li>'+
+                        '</ul>'+
+                      '</div>'+
+                    '</div>';
+        picker.container.find('.picker-modal-inner').html(html);
+        picker.container.find('.crear').on("click",function(){
+
+            alert(picker.container.find('.nombreLista').val())
+        })
+    }
+});
+$("#addList").on("click",function(){
+  pickerCustomToolbar.open();
+  return false;
+})
+
+}catch(err){
+    console.log(err);
+    alert(err.message || "error")
+}

@@ -1,3 +1,4 @@
+try{
 var myApp = new Framework7({
     fastClicks:true,
     pushState:true,
@@ -83,8 +84,8 @@ var app = {
     untils: {
         isPurchase : true,
         user_id: "fromweb",
-        serviceURL: "http://127.0.0.1/raptor/post/",
-        host: "http://127.0.0.1/",
+        serviceURL: "http://192.168.1.11/raptor/post/",
+        host: "http://192.168.1.11/",
         toServer: function (method, data, url, fn) {
             try {
                 app.loader.show()
@@ -320,11 +321,11 @@ var app = {
                 }
               }
         },
-        showDetail: function (isButton=false) {
+        showDetail: function (isButton) {
           $("#lbl_title_alt").text(app.reproductor.playList[app.result.itemSeleted].titulo);
           $('#lbl_artist_alt').text(app.reproductor.playList[app.result.itemSeleted].artista);
           //$('#totalTime').text("");       ///>>>>>>>>>Falta obtener la duracion de la cancion!
-
+            $(".popup-overlay").removeClass("modal-overlay-visible");
           var temp = $(".background-detail")[0].style.backgroundImage.split(',')[0].replace('url("', "").replace('")', "");
           if (temp != app.reproductor.playList[app.result.itemSeleted].img_alt) {
               $("#img_cover_detail")[0].src = app.reproductor.playList[app.result.itemSeleted].img_alt;
@@ -332,11 +333,11 @@ var app = {
               app.reproductor.getColorPalette();
           }
           if (!isButton) {
-            $(".popup-overlay").removeClass("modal-overlay-visible");
             myApp.popup('.popup-detail');
+            $(".popup-overlay").removeClass("modal-overlay-visible");
           }
         },
-        playSeleted: function (updatePlayList=false) {
+        playSeleted: function (updatePlayList) {
             app.reproductor.getTrack(app.result.itemSeleted);
             app.modal.closeModal('.popover-menu');
             if (updatePlayList) {/// Actulizar playList
@@ -571,3 +572,8 @@ $("#addList").on("click",function(){
   pickerCustomToolbar.open();
   return false;
 })
+
+}catch(err){
+    console.log(err);
+    alert(err.message || "error")
+}
