@@ -283,7 +283,7 @@ var app = {
             }
             app.reproductor.selector.play();
             app.reproductor.isFirtTime();
-            start_remote_controls(data_controls);
+            //start_remote_controls(data_controls);
         },
         pausa: function () {
             $("#btn_play_pause").attr("src", "img/ic_play_arrow_white_24px.svg");

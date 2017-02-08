@@ -245,7 +245,7 @@ var app = {
                 } else {
                     $("#btn_play_pause_detail").attr("src", "img/ic_pause_black_24px.svg");
                 }
-                //MusicControls.updateIsPlaying(true);
+                MusicControls.updateIsPlaying(true);
                 app.reproductor.selector.play();
                 return;
             }//Se reproduce una nueva cancion
@@ -293,7 +293,7 @@ var app = {
                 $("#btn_play_pause_detail").attr("src", "img/ic_play_arrow_black_24px.svg");
             }
 
-            //MusicControls.updateIsPlaying(false);
+            MusicControls.updateIsPlaying(false);
             app.reproductor.selector.pause();
         },
         next: function () {
