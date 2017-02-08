@@ -84,8 +84,8 @@ var app = {
     untils: {
         isPurchase : true,
         user_id: "fromweb",
-        serviceURL: "http://192.168.1.11/raptor/post/",
-        host: "http://192.168.1.11/",
+        serviceURL: "http://23.105.70.100/Raptor/post/",
+        host: "http://23.105.70.100/",
         toServer: function (method, data, url, fn) {
             try {
                 app.loader.show()
@@ -228,6 +228,7 @@ var app = {
         itemPlaying: "",
         getTrack: function (id) {
             app.untils.toServer("POST", { id: id, id_user: app.untils.user_id }, "track/download", function (data) {
+            	console.log(data)
                 if (typeof data.data.trackURL == "undefined") {
                     app.reproductor.getTrack(id);
                 }
@@ -282,7 +283,7 @@ var app = {
             }
             app.reproductor.selector.play();
             app.reproductor.isFirtTime();
-            //start_remote_controls(data_controls);
+            start_remote_controls(data_controls);
         },
         pausa: function () {
             $("#btn_play_pause").attr("src", "img/ic_play_arrow_white_24px.svg");
