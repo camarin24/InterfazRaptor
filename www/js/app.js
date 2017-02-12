@@ -61,6 +61,10 @@ var app = {
         $$(".background_img")[0].style.backgroundColor = app.paletteColor.getColor();
         app.untils.toServer("POST", { id: app.untils.user_id }, "user/insertUser", function (data) { });
 
+        if (app.untils.isPurchase) {
+            $("#_reproductor").css("margin-top","0");
+        }
+
         app.untils.toServer("POST", { id_user: app.untils.user_id }, "track/getSuggested", function (data) {
             data = data.data.data;
             var lon = data.length;
